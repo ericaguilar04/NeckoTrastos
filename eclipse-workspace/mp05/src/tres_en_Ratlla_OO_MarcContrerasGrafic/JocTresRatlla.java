@@ -13,7 +13,7 @@ public class JocTresRatlla {
 		String imatgeE = "/tres_en_Ratlla_OO_MarcContrerasGrafic/empat.png";
 		int x = 0, y = 0, count = 0;
 		boolean canviJugador = true;
-		/*** Creació de fitxes ***/
+		/*** Creació de fitxes ***//
 		Fitxa fitxa1 = new Fitxa("X");
 		Jugador jugador1 = new Jugador(fitxa1);	// Jugador 
 		fitxa1 = new Fitxa("O");
