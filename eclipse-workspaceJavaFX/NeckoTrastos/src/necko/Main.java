@@ -9,7 +9,7 @@ import javafx.scene.layout.BorderPane;
 public class Main extends Application {
 	@Override
 	// comentario
-	//Va a SUBIR
+	//Va a SUBIR  SI O SI
 	public void start(Stage primaryStage) {
 		try {
 			BorderPane root = new BorderPane();
