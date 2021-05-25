@@ -1,11 +1,11 @@
-package nt.makery.address.model;
+package com.nt.NekoTrastos.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-public class EmpDAO {
+public class TrastoDAO {
 	
 	
 	/*** VARIABLES GLOBALS ***/
@@ -29,31 +29,28 @@ public class EmpDAO {
 	 * Obté tots els empleats de la base de dades
 	 * @throws SQLException 
 	 */
-	public ArrayList<EmpVO> obtenirTotsEmpleats() throws SQLException{
+	public ArrayList<TrastoVO> obtenirTotsTrastos() throws SQLException{
 		
-		EmpVO empVOAux;
-		ArrayList<EmpVO> empleatsList ;
+		TrastoVO trastoVOAux;
+		ArrayList<TrastoVO> TrastoList ;
 		
 		try {
 			connection = getConnection();
 			System.out.println("Dins");
-			ps = connection.prepareStatement("SELECT * FROM EMP");
+			ps = connection.prepareStatement("SELECT * FROM Trastos");
 			rs = ps.executeQuery();
-			empleatsList = new ArrayList<EmpVO>();
+			TrastoList = new ArrayList<TrastoVO>();
 			while (rs.next()) {
-				empVOAux = new EmpVO();
-				empVOAux.setEmpno(Integer.parseInt(rs.getString(1)));
-				empVOAux.setEname(rs.getString(2));
-				empVOAux.setJob(rs.getString(3));
-				empVOAux.setMgr(rs.getString(4));
-				empVOAux.setHiredate(rs.getString(5));
-				empVOAux.setSalary(rs.getString(6));
-				empVOAux.setComm(rs.getString(7));
-				empVOAux.setDeptno(rs.getString(8));
+				trastoVOAux = new TrastoVO();
+				trastoVOAux.setID_Producto(Integer.parseInt(rs.getString(1)));
+				trastoVOAux.setNombreTrasto(rs.getString(2));
+				trastoVOAux.setDescripcion(rs.getString(3));
+				trastoVOAux.setPrecio(Float.parseFloat(rs.getString(4)));
+				trastoVOAux.setID_Propietario(rs.getString(5));
 				
-				empleatsList.add(empVOAux);
+				TrastoList.add(trastoVOAux);
 			}
-			return empleatsList;
+			return TrastoList;
 		}
 		catch(SQLException e) {
 			System.err.println(e.getMessage());
@@ -73,11 +70,11 @@ public class EmpDAO {
 		
 	}
 	
-	public  void deleteEMP(int nEmpno) throws SQLException {
+	public  void deleteTrasto(int nEmpno) throws SQLException {
 		try {
 			connection = getConnection();
 			System.out.println("Dins deleteEMP");
-			ps = connection.prepareStatement("DELETE FROM EMP WHERE EMPNO = ?");
+			ps = connection.prepareStatement("DELETE FROM Trastos WHERE ID_Producto = ?");
 			ps.setInt(1, nEmpno);
 			
 			ps.executeUpdate();

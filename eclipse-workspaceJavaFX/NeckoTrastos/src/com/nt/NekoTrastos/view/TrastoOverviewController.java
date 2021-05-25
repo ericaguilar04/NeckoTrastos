@@ -1,4 +1,4 @@
-package nt.makery.address.view;
+package com.nt.NekoTrastos.view;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -13,41 +13,38 @@ import javafx.scene.control.Alert.AlertType;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.nt.NekoTrastos.MainApp;
+import com.nt.NekoTrastos.model.TrastoDAO;
+import com.nt.NekoTrastos.model.TrastoVO;
 
-import nt.makery.address.MainApp;
-import nt.makery.address.model.EmpDAO;
-import nt.makery.address.model.EmpVO;
 
-
-public class EmplatOverviewController {
+public class TrastoOverviewController {
 	
     @FXML
-    private TableView<EmpVO> companyCSVTable;
+    private TableView<TrastoVO> trastosTable;
     @FXML
-    private TableColumn<EmpVO, String> empnoColumn;
+    private TableColumn<TrastoVO, String> nombreTrastoColumn;
     @FXML
-    private TableColumn<EmpVO, String> enameColumn;  
+    private TableColumn<TrastoVO, String> descripcionColumn;  
+    @FXML
+    private TableColumn<TrastoVO, String> precioColumn;
+    @FXML
+    private TableColumn<TrastoVO, String> id_propietarioColumn;  
 
     @FXML
-    private Label empnoLabel;
+    private Label id_Productolabel;
     @FXML
-    private Label enamelabel;
+    private Label nombreTrastolabel;
     @FXML
-    private Label joblabel;
+    private Label descripcionlabel;
     @FXML
-    private Label mgrlabel;
+    private Label preciolabel;
     @FXML
-    private Label hiredatelabel;
-    @FXML
-    private Label salarylabel;
-    @FXML
-    private Label commlabel;
-    @FXML
-    private Label deptnolabel;
+    private Label id_Propietariolabel;
 
     // Reference to the main application.
     private MainApp mainApp;
-    private EmpDAO empDAO;
+    private TrastoDAO trastoDAO;
     
     
 
@@ -55,7 +52,7 @@ public class EmplatOverviewController {
      * The constructor.
      * The constructor is called before the initialize() method.
      */
-    public EmplatOverviewController() {
+    public TrastoOverviewController() {
     }
 
     /**
@@ -65,20 +62,24 @@ public class EmplatOverviewController {
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
-    	empnoColumn.setCellValueFactory(
-                cellData -> new  SimpleStringProperty(String.valueOf(cellData.getValue().getEmpno())));
-    	enameColumn.setCellValueFactory(
-                cellData -> new SimpleStringProperty(cellData.getValue().getEname()));
+    	nombreTrastoColumn.setCellValueFactory(
+                cellData -> new  SimpleStringProperty(cellData.getValue().getNombreTrasto()));
+    	descripcionColumn.setCellValueFactory(
+                cellData -> new SimpleStringProperty(cellData.getValue().getDescripcion()));
+    	precioColumn.setCellValueFactory(
+                cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getPrecio())));
+    	id_propietarioColumn.setCellValueFactory(
+                cellData -> new SimpleStringProperty(cellData.getValue().getID_Propietario()));
     	
 
        // Clear person details.
-        showPersonDetails(null);
+        //showTrastoDetails(null);
         
-        System.out.println(companyCSVTable == null);
+        System.out.println(trastosTable == null);
 
         // Listen for selection changes and show the person details when changed.
-        companyCSVTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> showPersonDetails(newValue));
+        //trastosTable.getSelectionModel().selectedItemProperty().addListener(
+                //(observable, oldValue, newValue) -> showTrastoDetails(newValue));
     }
 
     /**
@@ -89,7 +90,7 @@ public class EmplatOverviewController {
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
         // Add observable list data to the table
-        companyCSVTable.setItems(mainApp.getPersonData());
+        trastosTable.setItems(mainApp.getTrastoData());
     }
     
     /**
@@ -98,67 +99,61 @@ public class EmplatOverviewController {
      * 
      * @param person the person or null
      */
-    private void showPersonDetails(EmpVO empleat) {
-        if (empleat != null) {
+    /*private void showTrastoDetails(TrastoVO trasto) {
+        if (trasto != null) {
             // Fill the labels with info from the person object.
-        	empnoLabel.setText(String.valueOf(empleat.getEmpno()));
-        	enamelabel.setText(empleat.getEname());
-        	joblabel.setText(empleat.getJob());
-        	mgrlabel.setText(empleat.getMgr());
-        	hiredatelabel.setText(empleat.getHiredate());
-        	salarylabel.setText(empleat.getSalary());
-        	commlabel.setText(empleat.getComm());
-        	deptnolabel.setText(empleat.getDeptno());
+        	id_Productolabel.setText(String.valueOf(trasto.getID_Producto()));
+        	nombreTrastolabel.setText(trasto.getNombreTrasto());
+        	descripcionlabel.setText(trasto.getDescripcion());
+        	preciolabel.setText(String.valueOf(trasto.getPrecio()));
+        	id_Propietariolabel.setText(trasto.getID_Propietario());
 
         } else {
             // Person is null, remove all the text.
-        	empnoLabel.setText("");
-        	enamelabel.setText("");
-        	joblabel.setText("");
-        	mgrlabel.setText("");
-        	hiredatelabel.setText("");
-        	salarylabel.setText("");
-        	commlabel.setText("");
-        	deptnolabel.setText("");
+        	id_Productolabel.setText("");
+        	nombreTrastolabel.setText("");
+        	descripcionlabel.setText("");
+        	preciolabel.setText("");
+        	id_Propietariolabel.setText("");
         }
     }
+    */
     
     /**
      * Called when the user clicks on the delete button.
      * @throws SQLException 
      */
-    
-    /*  @FXML
-	private void handleDeletePerson() {
+  /*  @FXML
+private void handleDeletePerson() {
     	
-    	EmpVO empVO;
+    	TrastoVO empVO;
     	int selectedIndex;
-    	ArrayList<EmpVO> llistaEmpleats;
+    	ArrayList<TrastoVO> llistaEmpleats;
     	
     	try {
 	        
-    		selectedIndex = companyCSVTable.getSelectionModel().getSelectedIndex();
+    		selectedIndex = trastosTable.getSelectionModel().getSelectedIndex();
 	        
     		if (selectedIndex >= 0) {
     			
-    			empDAO = new EmpDAO();
+    			trastoDAO = new TrastoDAO();
     			//obtenim l'empleat a esborrar
-	        	empVO = companyCSVTable.getItems().get(selectedIndex);
+	        	empVO = trastosTable.getItems().get(selectedIndex);
 	        	//Borrem l'empleat a bbdd
-	        	empDAO.deleteEMP(empVO.getEmpno());
+	        	trastoDAO.deleteTrasto(empVO.getID_Producto());
 	        	//obtenim totes els empleats
-	        	llistaEmpleats = empDAO.obtenirTotsEmpleats();
+	        	llistaEmpleats = trastoDAO.obtenirTotsTrastos();
 	        	
 	        	//esborrem totes els dades
-	        	companyCSVTable.getItems().clear();
+	        	trastosTable.getItems().clear();
 	        	//carreguem  la llista de'mepleats actuatlizada
 	        	for(int i=0; i< llistaEmpleats.size();i++)
-	        		companyCSVTable.getItems().add(llistaEmpleats.get(i));
+	        		trastosTable.getItems().add(llistaEmpleats.get(i));
 	        	
 	        	
 	        } else {
 	            // Nothing selected.
-	        	Alert alert = new Alert(AlertType.INFORMATION);
+	    		Alert alert = new Alert(AlertType.INFORMATION);
 	    		alert.setTitle("Information Dialog");
 	    		alert.setHeaderText(null);
 	    		alert.setContentText("I have a great message for you!");
@@ -174,8 +169,6 @@ public class EmplatOverviewController {
     		alert.setContentText("I have a great message for you!");
 
     		alert.showAndWait();
-    		
-    		
     	}
     }
     */
@@ -184,17 +177,16 @@ public class EmplatOverviewController {
      * Called when the user clicks the new button. Opens a dialog to edit
      * details for a new person.
      */
-    
-    /*
-    @FXML
+  /*  @FXML
     private void handleNewPerson() {
-        EmpVO tempPerson = new EmpVO();
-        boolean okClicked = mainApp.showPersonEditDialog(tempPerson);
+        TrastoVO tempPerson = new TrastoVO();
+        boolean okClicked = mainApp.showTrastoEditDialog(tempPerson);
         if (okClicked) {
-            mainApp.getPersonData().add(tempPerson);
+            mainApp.getTrastoData().add(tempPerson);
         }
     }
     */
+    
 
     /**
      * Called when the user clicks the edit button. Opens a dialog to edit

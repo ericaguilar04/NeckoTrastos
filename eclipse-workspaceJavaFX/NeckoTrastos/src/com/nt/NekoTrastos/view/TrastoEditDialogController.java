@@ -1,27 +1,25 @@
-package nt.makery.address.view;
+package com.nt.NekoTrastos.view;
+
+import com.nt.NekoTrastos.model.TrastoVO;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
-
-import nt.makery.address.model.EmpVO;
-import nt.makery.address.util.DateUtil;
 
 /**
  * Dialog to edit details of a person.
  * 
  * @author Marco Jakob
  */
-public class PersonEditDialogController {
+public class TrastoEditDialogController {
 
     @FXML
-    private TextField empnoField;
+    private TextField id_ProductoField;
     @FXML
-    private TextField enameField;
+    private TextField NombreTrastoField;
 
     private Stage dialogStage;
-    private EmpVO empleat;
+    private TrastoVO trasto;
     private boolean okClicked = false;
 
     /**
@@ -46,11 +44,11 @@ public class PersonEditDialogController {
      * 
      * @param person
      */
-    public void setPerson(EmpVO empleat) {
-        this.empleat = empleat;
+    public void setPerson(TrastoVO trasto) {
+        this.trasto = trasto;
 
-        empnoField.setText(String.valueOf(empleat.getEmpno()));
-        enameField.setText(empleat.getEname());
+        id_ProductoField.setText(String.valueOf(trasto.getID_Producto()));
+        NombreTrastoField.setText(trasto.getNombreTrasto());
         
     }
 

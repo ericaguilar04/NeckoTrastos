@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="568.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nt.NekoTrastos.view.TrastoOverviewController">
+   <children>
+      <AnchorPane layoutX="-10.0" layoutY="-12.0" prefHeight="599.0" prefWidth="704.0">
+         <children>
+            <TextField layoutX="168.0" layoutY="67.0" prefHeight="24.0" prefWidth="317.0" />
+            <AnchorPane layoutX="51.0" layoutY="116.0" prefHeight="200.0" prefWidth="594.0">
+               <children>
+                  <TableView fx:id="trastosTable" layoutX="-1.0" prefHeight="200.0" prefWidth="594.0">
+                    <columns>
+                      <TableColumn fx:id="nombreTrastoColumn" prefWidth="75.0" text="Nombre" />
+                      <TableColumn fx:id="descripcionColumn" prefWidth="102.0" text="Descripcion" />
+                        <TableColumn fx:id="precioColumn" prefWidth="102.0" text="Precio" />
+                        <TableColumn fx:id="id_propietarioColumn" prefWidth="102.0" text="Propietario" />
+                    </columns>
+                  </TableView>
+               </children></AnchorPane>
+         </children></AnchorPane>
+      <Button layoutX="548.0" layoutY="14.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="118.0" text="Iniciar Sesion" />
+      <Button layoutX="477.0" layoutY="55.0" mnemonicParsing="false" text="🔍" />
+   </children>
+</AnchorPane>

@@ -1,10 +1,10 @@
-package nt.makery.address.model;
+package com.nt.NekoTrastos.model;
 import java.sql.*;
 import java.sql.SQLException;
 
 public class ConnectionDB {
 	/*** ATRIBUTES ***/
-	private String url = "jdbc:mysql://localhost:3306/companyCSV";
+	private String url = "jdbc:mysql://localhost:3306/NekoTrastos";
 	private String user = "usuario";
 	private String passwd = "password";
 	
