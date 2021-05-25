@@ -20,7 +20,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
-
+	/*** VARIABLES ***/
     private Stage primaryStage;
     private BorderPane rootLayout;
     private EmpDAO empDAO;
@@ -36,7 +36,8 @@ public class MainApp extends Application {
 	 * Constructor
 	 */
 	public MainApp() {
-		ArrayList<EmpVO> llistaEmpleats;
+		/** Para cargar la base de datos **/
+		ArrayList<EmpVO> llistaEmpleats;		
 		
 		try {
 			empDAO = new EmpDAO();
@@ -53,7 +54,7 @@ public class MainApp extends Application {
 	}
   
 	/**
-	 * Returns the data as an observable list of Persons. 
+	 * Devuelve los datos como una lista observable de Usuarios
 	 * @return
 	 */
 	public ObservableList<EmpVO> getPersonData() {
@@ -122,7 +123,7 @@ public class MainApp extends Application {
      * @param person the person object to be edited
      * @return true if the user clicked OK, false otherwise.
      */
-    public boolean showPersonEditDialog(EmpVO empleat) {
+    /*public boolean showPersonEditDialog(EmpVO empleat) {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
@@ -151,6 +152,8 @@ public class MainApp extends Application {
             return false;
         }
     }
+    
+    */
     
 	/**
 	 * Returns the main stage.

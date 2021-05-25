@@ -127,8 +127,9 @@ public class EmplatOverviewController {
      * Called when the user clicks on the delete button.
      * @throws SQLException 
      */
-    @FXML
-private void handleDeletePerson() {
+    
+    /*  @FXML
+	private void handleDeletePerson() {
     	
     	EmpVO empVO;
     	int selectedIndex;
@@ -173,13 +174,18 @@ private void handleDeletePerson() {
     		alert.setContentText("I have a great message for you!");
 
     		alert.showAndWait();
+    		
+    		
     	}
     }
+    */
     
     /**
      * Called when the user clicks the new button. Opens a dialog to edit
      * details for a new person.
      */
+    
+    /*
     @FXML
     private void handleNewPerson() {
         EmpVO tempPerson = new EmpVO();
@@ -188,6 +194,7 @@ private void handleDeletePerson() {
             mainApp.getPersonData().add(tempPerson);
         }
     }
+    */
 
     /**
      * Called when the user clicks the edit button. Opens a dialog to edit
