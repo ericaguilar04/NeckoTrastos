@@ -11,12 +11,12 @@ import javafx.stage.Stage;
  * 
  * @author Marco Jakob
  */
-public class TrastoEditDialogController {
+public class InicioSesionController {
 
     @FXML
-    private TextField id_ProductoField;
+    private TextField nombreUsuario;
     @FXML
-    private TextField NombreTrastoField;
+    private TextField contrasenya;
 
     private Stage dialogStage;
     private TrastoVO trasto;
@@ -39,18 +39,7 @@ public class TrastoEditDialogController {
         this.dialogStage = dialogStage;
     }
 
-    /**
-     * Sets the person to be edited in the dialog.
-     * 
-     * @param person
-     */
-    public void setPerson(TrastoVO trasto) {
-        this.trasto = trasto;
-
-        id_ProductoField.setText(String.valueOf(trasto.getID_Producto()));
-        NombreTrastoField.setText(trasto.getNombreTrasto());
-        
-    }
+    
 
     /**
      * Returns true if the user clicked OK, false otherwise.

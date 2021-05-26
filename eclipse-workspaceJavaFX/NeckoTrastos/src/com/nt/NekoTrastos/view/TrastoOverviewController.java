@@ -31,7 +31,7 @@ public class TrastoOverviewController {
     @FXML
     private TableColumn<TrastoVO, String> id_propietarioColumn;  
 
-    @FXML
+    /*@FXML
     private Label id_Productolabel;
     @FXML
     private Label nombreTrastolabel;
@@ -41,6 +41,7 @@ public class TrastoOverviewController {
     private Label preciolabel;
     @FXML
     private Label id_Propietariolabel;
+    */
 
     // Reference to the main application.
     private MainApp mainApp;
@@ -61,7 +62,8 @@ public class TrastoOverviewController {
      */
     @FXML
     private void initialize() {
-        // Initialize the person table with the two columns.
+    	System.out.println("initialize");
+        // Initialize the trasto table with the 4 columns.
     	nombreTrastoColumn.setCellValueFactory(
                 cellData -> new  SimpleStringProperty(cellData.getValue().getNombreTrasto()));
     	descripcionColumn.setCellValueFactory(
@@ -91,6 +93,10 @@ public class TrastoOverviewController {
         this.mainApp = mainApp;
         // Add observable list data to the table
         trastosTable.setItems(mainApp.getTrastoData());
+    }
+    
+   public void onIniciSession() {
+    	this.mainApp.iniSession();
     }
     
     /**
