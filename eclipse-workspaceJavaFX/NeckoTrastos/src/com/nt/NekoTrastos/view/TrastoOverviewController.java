@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 
 import java.sql.SQLException;
@@ -29,7 +30,10 @@ public class TrastoOverviewController {
     @FXML
     private TableColumn<TrastoVO, String> precioColumn;
     @FXML
-    private TableColumn<TrastoVO, String> id_propietarioColumn;  
+    private TableColumn<TrastoVO, String> id_propietarioColumn;
+    @FXML
+	private TextField barraBuscadorra;
+
 
     /*@FXML
     private Label id_Productolabel;
@@ -47,7 +51,42 @@ public class TrastoOverviewController {
     private MainApp mainApp;
     private TrastoDAO trastoDAO;
     
+    @FXML
+    public void BuscarClicked() throws SQLException {
+    	
+    		
+    		ArrayList<TrastoVO> trastosList;
+        	
+        	try {
+        	
+        		trastoDAO = new TrastoDAO();
+            	trastosList = trastoDAO.buscarTrasto(barraBuscadorra.getText());
+            	
+            	//Netejar la llista d'empleats
+            	trastosTable.getItems().clear();
+            	
+            	//carregarlos a empleatable
+            	for(int i=0; i<trastosList.size();i++) {
+            		trastosTable.getItems().add(trastosList.get(i));
+        		}
+            	
+          
+            
+        	}catch(SQLException e){
+        		System.err.println("buttonDelete ::  ERROR" + e.getMessage());
+        		 // Nothing selected.
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.initOwner(mainApp.getPrimaryStage());
+                alert.setTitle("");
+                alert.setHeaderText("No Person Selected");
+                alert.setContentText("Please select a person in the table.");
+                
+                alert.showAndWait();
+        		
+        	}
+        
     
+    }
 
     /**
      * The constructor.

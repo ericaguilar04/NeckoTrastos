@@ -96,6 +96,45 @@ public class TrastoDAO {
 			}
 		}
 	}
+	
+	public ArrayList<TrastoVO> buscarTrasto(String nombreTrasto) throws SQLException {
+		TrastoVO trastoVOAux;
+		ArrayList<TrastoVO> trastoList ;
+		
+		try {
+			connection = getConnection();
+			System.out.println("Dins deleteEMP");
+			ps = connection.prepareStatement("SELECT * FROM Trastos WHERE NombreTrasto LIKE ?");
+			ps.setString(1, "%"+nombreTrasto+"%");
+			ResultSet rs = ps.executeQuery();
+			trastoList = new ArrayList<TrastoVO>();
+			while (rs.next()) {
+				trastoVOAux = new TrastoVO();
+				trastoVOAux.setID_Producto(Integer.parseInt(rs.getString(1)));
+				trastoVOAux.setNombreTrasto(rs.getString(2));
+				trastoVOAux.setDescripcion(rs.getString(3));
+				trastoVOAux.setPrecio(Float.parseFloat(rs.getString(4)));
+				trastoVOAux.setID_Propietario(rs.getString(5));
+				
+				trastoList.add(trastoVOAux);
+			}
+			return trastoList;
+		}
+		catch(SQLException e) {
+			System.err.println("BusquedaTrasto" + e.getMessage());
+			throw e;
+		}
+		finally {
+			try {
+				if(ps!=null) ps.close();
+				if(connection!=null) connection.close();
+			}catch(SQLException e) {
+				System.err.println("BusquedaTrasto" + e.getMessage());
+			}catch (Exception e) {
+				System.err.println("BusquedaTrasto" + e.getMessage());
+			}
+		}
+	}
 }
 	
 	

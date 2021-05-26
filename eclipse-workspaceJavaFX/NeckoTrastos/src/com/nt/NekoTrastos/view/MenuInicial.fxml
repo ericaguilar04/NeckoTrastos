@@ -10,7 +10,7 @@
    <children>
       <AnchorPane layoutX="-10.0" layoutY="-12.0" prefHeight="400.0" prefWidth="600.0">
          <children>
-            <TextField layoutX="168.0" layoutY="67.0" prefHeight="24.0" prefWidth="317.0" />
+            <TextField fx:id="barraBuscadorra" layoutX="168.0" layoutY="67.0" prefHeight="24.0" prefWidth="317.0" />
             <AnchorPane layoutX="51.0" layoutY="116.0" prefHeight="400.0" prefWidth="600.0">
                <children>
                   <TableView fx:id="trastosTable" layoutX="-1.0" prefHeight="200.0" prefWidth="594.0">
@@ -24,6 +24,6 @@
                </children></AnchorPane>
             <Button layoutX="515.0" layoutY="28.0" mnemonicParsing="false" onAction="#onIniciSession" prefHeight="24.0" prefWidth="118.0" text="Iniciar Sesion" />
          </children></AnchorPane>
-      <Button layoutX="477.0" layoutY="55.0" mnemonicParsing="false" text="🔍" />
+      <Button layoutX="477.0" layoutY="55.0" mnemonicParsing="false" onAction="#BuscarClicked" prefHeight="26.0" prefWidth="30.0" text="ð" />
    </children>
 </AnchorPane>
