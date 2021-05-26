@@ -1,4 +1,4 @@
-package com.nt.NekoTrastos.model;
+package com.nt.NekoTrastos.util;
 import java.sql.*;
 import java.sql.SQLException;
 
