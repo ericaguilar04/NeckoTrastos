@@ -20,7 +20,7 @@ public class InicioSesionController {
 
     private Stage dialogStage;
     private TrastoVO trasto;
-    private boolean okClicked = false;
+    private boolean aceptarClicked = false;
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -38,16 +38,16 @@ public class InicioSesionController {
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
-
     
 
     /**
-     * Returns true if the user clicked OK, false otherwise.
+     * Devuelve true si el usuario está en la base de datos
      * 
      * @return
      */
-    public boolean isOkClicked() {
-        return okClicked;
+    public boolean isAceptarClicked() {
+    	System.out.println(aceptarClicked);
+        return aceptarClicked;
     }
 
     /**

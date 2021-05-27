@@ -136,7 +136,7 @@ public class MainApp extends Application {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
             
-         // Set the person into the controller.
+         // Set the Usuario into the controller.
             InicioSesionController controller = loader.getController();
             controller.setDialogStage(dialogStage);
             //controller.setTrasto(trasto);	// no funciona Mirar DESPRÉS
@@ -144,8 +144,7 @@ public class MainApp extends Application {
          // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
 
-            return controller.isOkClicked();
-            
+            return controller.isAceptarClicked();
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Error al cargar la escena del menú inicial");
