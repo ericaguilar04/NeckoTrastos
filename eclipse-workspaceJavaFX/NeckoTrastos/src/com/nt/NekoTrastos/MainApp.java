@@ -1,11 +1,14 @@
 package com.nt.NekoTrastos;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.nt.NekoTrastos.model.TrastoDAO;
 import com.nt.NekoTrastos.model.TrastoVO;
+import com.nt.NekoTrastos.model.UsuarioDAO;
+import com.nt.NekoTrastos.model.UsuarioVO;
 import com.nt.NekoTrastos.view.InicioSesionController;
 //import com.nt.NekoTrastos.view.TrastoEditDialogController;
 import com.nt.NekoTrastos.view.TrastoOverviewController;
@@ -26,34 +29,56 @@ public class MainApp extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     private TrastoDAO trastoDAO;
+    private UsuarioDAO usuarioDAO;
 
     // ... AFTER THE OTHER VARIABLES ...
 
 	/**
-	 * The data as an observable list of Persons.
+	 * The data as an observable list of Trastos.
 	 */
 	private ObservableList<TrastoVO> TrastoData = FXCollections.observableArrayList();
-
+	/**
+	 * The data as a observable list of Usuarios.
+	 */
+	private ObservableList<UsuarioVO> UsuarioData = FXCollections.observableArrayList();
 	/**
 	 * Constructor
+	 * @throws InvocationTargetException 
 	 */
-	public MainApp() {
-		ArrayList<TrastoVO> llistaEmpleats;
+	public MainApp() throws InvocationTargetException {
+		ArrayList<TrastoVO> llistaTrastos;
 		
 		try {
 			trastoDAO = new TrastoDAO();
-			llistaEmpleats = trastoDAO.obtenirTotsTrastos();
+			llistaTrastos = trastoDAO.obtenirTotsTrastos();
 			
-			for(int i=0; i< llistaEmpleats.size();i++) {
-				TrastoData.add(llistaEmpleats.get(i));
-				System.out.println(llistaEmpleats.get(i).getID_Producto());
-				System.out.println(llistaEmpleats.get(i).getDescripcion());
+			for(int i=0; i< llistaTrastos.size();i++) {
+				TrastoData.add(llistaTrastos.get(i));
+				System.out.println(llistaTrastos.get(i).getID_Producto());
+				System.out.println(llistaTrastos.get(i).getDescripcion());
 			}
 		}catch(SQLException e) {
 			System.err.println("MainApp :: " + e.getMessage());
 		}
 		
+		ArrayList<UsuarioVO> llistaUsuarios;
+		
+		try {
+			usuarioDAO = new UsuarioDAO();
+			llistaUsuarios = usuarioDAO.obtenirTotsUsuarios();
+			for(int i=0; i< llistaUsuarios.size();i++) {
+				UsuarioData.add(llistaUsuarios.get(i));
+				System.out.println(llistaUsuarios.get(i).getId_Usuario());
+				System.out.println(llistaUsuarios.get(i).getContrasenya());
+			}
+		}
+		catch(SQLException e) {
+			System.err.println("MainApp :: " + e.getMessage());
+		}
+		
 	}
+		
+	
   
 	/**
 	 * Returns the data as an observable list of Persons. 
@@ -62,6 +87,14 @@ public class MainApp extends Application {
 	public ObservableList<TrastoVO> getTrastoData() {
 	
 		return TrastoData;
+	}
+	/**
+	 * Devuelve los datos de la tabla Usuario de la lista Usuarios
+	 * @return
+	 */
+	public ObservableList<UsuarioVO> getUsuarioData() {
+		
+		return UsuarioData;
 	}
 
     @Override
@@ -120,7 +153,7 @@ public class MainApp extends Application {
         }
     }
     
-    public boolean iniSession() {
+    public void iniSession() {
     	// Carga el diseño de la vista de un archivo fxml (propiedades)
     	try {
             // Carga el diseño de la vista de un archivo fxml (propiedades)
@@ -143,12 +176,12 @@ public class MainApp extends Application {
             
          // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
-
-            return controller.isAceptarClicked();
+            //System.out.println(controller.isAceptarClicked());
+            //return controller.isAceptarClicked();
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Error al cargar la escena del menú inicial");
-            return false;
+            //return false;
         }
 		
     }

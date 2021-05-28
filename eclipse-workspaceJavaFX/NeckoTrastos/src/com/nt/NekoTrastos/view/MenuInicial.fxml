@@ -24,6 +24,6 @@
                </children></AnchorPane>
             <Button layoutX="515.0" layoutY="28.0" mnemonicParsing="false" onAction="#onIniciSession" prefHeight="24.0" prefWidth="118.0" text="Iniciar Sesion" />
          </children></AnchorPane>
-      <Button layoutX="477.0" layoutY="55.0" mnemonicParsing="false" onAction="#BuscarClicked" prefHeight="26.0" prefWidth="30.0" text="ð" />
+      <Button layoutX="477.0" layoutY="55.0" mnemonicParsing="false" onAction="#buscarClicked" prefHeight="26.0" prefWidth="30.0" text="ð" />
    </children>
 </AnchorPane>

@@ -1,9 +1,20 @@
 package com.nt.NekoTrastos.view;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import com.nt.NekoTrastos.MainApp;
+import com.nt.NekoTrastos.model.TrastoDAO;
 import com.nt.NekoTrastos.model.TrastoVO;
+import com.nt.NekoTrastos.model.UsuarioVO;
+import com.nt.NekoTrastos.model.UsuarioDAO;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 
 /**
@@ -14,14 +25,74 @@ import javafx.stage.Stage;
 public class InicioSesionController {
 
     @FXML
-    private TextField nombreUsuario;
+    private TextField loginUsuario;
     @FXML
-    private TextField contrasenya;
+    private PasswordField contraseña;
+    @FXML
+    private Label errorLogin;
 
     private Stage dialogStage;
-    private TrastoVO trasto;
+    private UsuarioVO usuario;
+    private UsuarioDAO usuarioDAO;
     private boolean aceptarClicked = false;
+    private MainApp mainApp;
+    
+    @FXML
+    public void aceptarClicked() throws SQLException {
+    	
+		
+		ArrayList<UsuarioVO> usuariosList;
+    	//String getLoginUsuario = loginUsuario.getText();
+    	//String getContraseña = contraseña.getText();
+    	try {
+    		//System.out.println(contraseña.getText());
+    		usuarioDAO = new UsuarioDAO();
+    		//usuariosList = usuarioDAO.comprovacionUsuario(getLoginUsuario, getContraseña);
+    		/*if (loginUsuario.getText().isEmpty()) {
+    			
+    		}*/
+    		
+    			if (usuarioDAO.comprovacionUsuario(loginUsuario.getText(), contraseña.getText()) ) {
+        			System.out.println(loginUsuario.getText() + contraseña.getText());
+        			dialogStage.close();
+        		}
+    			else {
+    				errorLogin.setText("Usuario o Contraseña Incorrectas");
+    			}
+    			System.out.println(loginUsuario.getText() + contraseña.getText());
+        		usuarioDAO.comprovacionUsuario(loginUsuario.getText(), contraseña.getText());
+    		
+    		
+    		
+    		
+    		
+    		
+    		
+        	
+    		
+        	
+        	
+        	
+      
+        
+    	}catch(SQLException e){
+    		System.err.println("buttonDelete ::  ERROR" + e.getMessage());
+    		 // Nothing selected.
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.initOwner(mainApp.getPrimaryStage());
+            alert.setTitle("");
+            alert.setHeaderText("No Usuario Selected");
+            alert.setContentText("Please select a Usuario in the table.");
+            
+            alert.showAndWait();
+    		
+    	}
+    	
+    	
 
+}
+    public InicioSesionController() {	
+    }
     /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
@@ -46,7 +117,7 @@ public class InicioSesionController {
      * @return
      */
     public boolean isAceptarClicked() {
-    	System.out.println(aceptarClicked);
+    	
         return aceptarClicked;
     }
 
@@ -54,8 +125,8 @@ public class InicioSesionController {
      * Called when the user clicks ok.
      */
    /* @FXML
-    private void handleOk() {
-        if (isInputValid()) {
+    private void handleAceptar() {
+        if (is Aceptar()) {
             empleat.setEmpno(String.valueOf(empnoField.getText()));
             empleat.setEname(enameField.getText());
 
@@ -63,7 +134,7 @@ public class InicioSesionController {
             okClicked = true;
             dialogStage.close();
         }
-    }
+    }*/
 
     /**
      * Called when the user clicks cancel.

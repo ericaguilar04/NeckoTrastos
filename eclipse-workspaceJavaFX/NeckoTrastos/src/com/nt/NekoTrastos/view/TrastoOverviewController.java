@@ -52,7 +52,7 @@ public class TrastoOverviewController {
     private TrastoDAO trastoDAO;
     
     @FXML
-    public void BuscarClicked() throws SQLException {
+    public void buscarClicked() throws SQLException {
     	
     		
     		ArrayList<TrastoVO> trastosList;

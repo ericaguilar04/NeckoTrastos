@@ -1,5 +1,6 @@
 package com.nt.NekoTrastos.model;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +18,7 @@ public class TrastoDAO {
 	
 	
 
-	private Connection getConnection() throws SQLException {
+	private Connection getConnection() throws SQLException  {
 		Connection conn;
 		ConnectionDB connDB = new ConnectionDB();
 		conn = connDB.getConnection();
