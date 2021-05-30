@@ -1,22 +1,25 @@
 package com.nt.NekoTrastos.view;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
-
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.nt.NekoTrastos.MainApp;
 import com.nt.NekoTrastos.model.TrastoDAO;
 import com.nt.NekoTrastos.model.TrastoVO;
+import com.nt.NekoTrastos.model.UsuarioDAO;
+
+import javafx.beans.property.SimpleStringProperty;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
+import javafx.scene.control.Button;
+import javafx.scene.control.Control;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 
 
 public class TrastoOverviewController {
@@ -33,7 +36,8 @@ public class TrastoOverviewController {
     private TableColumn<TrastoVO, String> id_propietarioColumn;
     @FXML
 	private TextField barraBuscadorra;
-
+    @FXML
+    private Button misTrastosButton;
 
     /*@FXML
     private Label id_Productolabel;
@@ -50,10 +54,19 @@ public class TrastoOverviewController {
     // Reference to the main application.
     private MainApp mainApp;
     private TrastoDAO trastoDAO;
+    private UsuarioDAO usuarioDAO;
+    private InicioSesionController controllerCamuflajeBotones;
+    private Stage dialogStage;
+    private boolean prueba;
     
+    
+    
+    /*
+     * Habilita el botó per buscar el text introdït a la barra espaciadora
+     */
     @FXML
     public void buscarClicked() throws SQLException {
-    	
+    		
     		
     		ArrayList<TrastoVO> trastosList;
         	
@@ -86,6 +99,14 @@ public class TrastoOverviewController {
         	}
         
     
+    }
+    /*
+     * Metodo que acciona el botón para acceder los trastos del usuario
+     */
+    @FXML
+    public void entrarMisTrastos() throws SQLException {	
+    	
+   
     }
 
     /**
@@ -134,9 +155,37 @@ public class TrastoOverviewController {
         trastosTable.setItems(mainApp.getTrastoData());
     }
     
-   public void onIniciSession() {
+   @FXML 
+   public void onIniciSession() throws SQLException, IOException {
+	   FXMLLoader loader = new FXMLLoader();	
+	   loader.setLocation(getClass().getResource("IniciarSesion.fxml"));
+	   loader.load();
+	   controllerCamuflajeBotones = loader.getController();
     	this.mainApp.iniSession();
+    	prueba = controllerCamuflajeBotones.aceptarClicked();
+    	if(prueba) {
+    		mostrarBoton(misTrastosButton);
+    		System.out.println("QUE VOYYYYYY " + controllerCamuflajeBotones.aceptarClicked());
+    	}
+    	else {
+    		mostrarBoton(misTrastosButton);
+    	}
+   
+    	System.out.println(prueba);
+    	/*else {
+    		mostrarBoton(misTrastosButton);
+    		System.out.println("LO QUE QUIERAAA " + controllerCamuflajeBotones.aceptarClicked());
+    	}*/
     }
+   
+   void ocultarBoton (Control boton) {
+	   boton.setVisible(false);
+	   boton.setManaged(false);
+}
+   void mostrarBoton (Control boton) {
+	   boton.setVisible(true);
+	   boton.setManaged(true);
+}
     
     /**
      * Fills all text fields to show details about the person.

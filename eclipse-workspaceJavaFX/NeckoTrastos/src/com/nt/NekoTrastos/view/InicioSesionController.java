@@ -22,9 +22,12 @@ import javafx.stage.Stage;
  * 
  * @author Marco Jakob
  */
-public class InicioSesionController {
 
-    @FXML
+
+public class InicioSesionController {
+	
+    public  int hola;
+	@FXML
     private TextField loginUsuario;
     @FXML
     private PasswordField contraseña;
@@ -34,14 +37,13 @@ public class InicioSesionController {
     private Stage dialogStage;
     private UsuarioVO usuario;
     private UsuarioDAO usuarioDAO;
-    private boolean aceptarClicked = false;
+    private boolean usuarioExiste = false;
     private MainApp mainApp;
     
     @FXML
-    public void aceptarClicked() throws SQLException {
+    public boolean aceptarClicked() throws SQLException {
     	
 		
-		ArrayList<UsuarioVO> usuariosList;
     	//String getLoginUsuario = loginUsuario.getText();
     	//String getContraseña = contraseña.getText();
     	try {
@@ -55,26 +57,14 @@ public class InicioSesionController {
     			if (usuarioDAO.comprovacionUsuario(loginUsuario.getText(), contraseña.getText()) ) {
         			System.out.println(loginUsuario.getText() + contraseña.getText());
         			dialogStage.close();
-        		}
+        			usuarioExiste = true;
+    			}
     			else {
     				errorLogin.setText("Usuario o Contraseña Incorrectas");
     			}
     			System.out.println(loginUsuario.getText() + contraseña.getText());
         		usuarioDAO.comprovacionUsuario(loginUsuario.getText(), contraseña.getText());
-    		
-    		
-    		
-    		
-    		
-    		
-    		
-        	
-    		
-        	
-        	
-        	
-      
-        
+        		
     	}catch(SQLException e){
     		System.err.println("buttonDelete ::  ERROR" + e.getMessage());
     		 // Nothing selected.
@@ -87,10 +77,20 @@ public class InicioSesionController {
             alert.showAndWait();
     		
     	}
+    	System.out.println("USUARIO EXISTE " + usuarioExiste);
+		return usuarioExiste;
     	
     	
 
-}
+    }
+    
+    public boolean usuarioExiste() throws SQLException {
+    	usuarioDAO = new UsuarioDAO();
+    	if (usuarioDAO.comprovacionUsuario(loginUsuario.getText(), contraseña.getText()) )	usuarioExiste = true;
+    	else usuarioExiste = false;
+    	
+    	return usuarioExiste;
+    }
     public InicioSesionController() {	
     }
     /**
@@ -115,11 +115,17 @@ public class InicioSesionController {
      * Devuelve true si el usuario está en la base de datos
      * 
      * @return
+     * @throws SQLException 
      */
-    public boolean isAceptarClicked() {
+    /*public boolean isAceptarClicked() throws SQLException {
+    	usuarioDAO = new UsuarioDAO();
     	
+    	if (usuarioDAO.comprovacionUsuario(loginUsuario.getText(), contraseña.getText()) ) {
+    		aceptarClicked = true;
+    	}
+    	else aceptarClicked = false;
         return aceptarClicked;
-    }
+    }*/
 
     /**
      * Called when the user clicks ok.

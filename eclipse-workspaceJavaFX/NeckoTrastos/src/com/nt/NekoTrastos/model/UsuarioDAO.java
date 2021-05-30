@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.nt.NekoTrastos.util.ConnectionDB;
-
 public class UsuarioDAO {
 	
 	
@@ -23,6 +22,7 @@ public class UsuarioDAO {
 		ConnectionDB connDB = new ConnectionDB();
 		conn = connDB.getConnection();
 		return conn;
+		
 	}
 	
 
