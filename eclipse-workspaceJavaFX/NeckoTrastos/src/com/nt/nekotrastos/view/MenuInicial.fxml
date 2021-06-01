@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nt.nekotrastos.view.TrastoOverviewController">
+   <children>
+      <AnchorPane layoutX="-10.0" layoutY="-12.0" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <TextField fx:id="barraBuscadorra" layoutX="167.0" layoutY="76.0" prefHeight="24.0" prefWidth="317.0" />
+            <AnchorPane layoutX="51.0" layoutY="116.0" prefHeight="400.0" prefWidth="600.0">
+               <children>
+                  <TableView fx:id="trastosTable" layoutX="-1.0" prefHeight="200.0" prefWidth="583.0">
+                    <columns>
+                      <TableColumn fx:id="nombreTrastoColumn" prefWidth="134.0" text="Nombre" />
+                      <TableColumn fx:id="descripcionColumn" prefWidth="143.0" text="Descripcion" />
+                        <TableColumn fx:id="precioColumn" prefWidth="104.0" text="Precio" />
+                        <TableColumn fx:id="id_propietarioColumn" prefWidth="87.0" text="Propietario" />
+                        <TableColumn prefWidth="114.0" text="Telefono" />
+                    </columns>
+                  </TableView>
+               </children></AnchorPane>
+            <Button layoutX="515.0" layoutY="28.0" mnemonicParsing="false" onAction="#onIniciSession" prefHeight="24.0" prefWidth="118.0" text="Iniciar Sesion" />
+            <Button fx:id="misTrastosButton" layoutX="474.0" layoutY="16.0" mnemonicParsing="false" onAction="#entrarMisTrastos" prefHeight="24.0" prefWidth="118.0" text="MisTrastos" visible="false" />
+            <Button layoutX="474.0" layoutY="43.0" mnemonicParsing="false" onAction="#entrarMisChats" prefHeight="24.0" prefWidth="118.0" text="MisChats" visible="false" />
+         </children></AnchorPane>
+      <Button layoutX="477.0" layoutY="63.0" mnemonicParsing="false" onAction="#buscarClicked" prefHeight="26.0" prefWidth="30.0" text="🔍" />
+   </children>
+</AnchorPane>

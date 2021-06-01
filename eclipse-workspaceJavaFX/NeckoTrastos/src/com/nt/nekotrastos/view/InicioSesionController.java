@@ -1,13 +1,13 @@
-package com.nt.NekoTrastos.view;
+package com.nt.nekotrastos.view;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.nt.NekoTrastos.MainApp;
-import com.nt.NekoTrastos.model.TrastoDAO;
-import com.nt.NekoTrastos.model.TrastoVO;
-import com.nt.NekoTrastos.model.UsuarioVO;
-import com.nt.NekoTrastos.model.UsuarioDAO;
+import com.nt.nekotrastos.MainApp;
+import com.nt.nekotrastos.model.TrastoDAO;
+import com.nt.nekotrastos.model.TrastoVO;
+import com.nt.nekotrastos.model.UsuarioVO;
+import com.nt.nekotrastos.model.UsuarioDAO;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -20,13 +20,13 @@ import javafx.stage.Stage;
 /**
  * Dialog to edit details of a person.
  * 
- * @author Marco Jakob
+ * @author 
  */
 
 
 public class InicioSesionController {
 	
-    public  int hola;
+   
 	@FXML
     private TextField loginUsuario;
     @FXML
@@ -35,72 +35,24 @@ public class InicioSesionController {
     private Label errorLogin;
 
     private Stage dialogStage;
-    private UsuarioVO usuario;
     private UsuarioDAO usuarioDAO;
-    private boolean usuarioExiste = false;
+    private UsuarioVO usuario;
+    private boolean usuarioExiste;
+    
     private MainApp mainApp;
+    private boolean okClicked = false;
+  
     
-    @FXML
-    public boolean aceptarClicked() throws SQLException {
-    	
-		
-    	//String getLoginUsuario = loginUsuario.getText();
-    	//String getContraseña = contraseña.getText();
-    	try {
-    		//System.out.println(contraseña.getText());
-    		usuarioDAO = new UsuarioDAO();
-    		//usuariosList = usuarioDAO.comprovacionUsuario(getLoginUsuario, getContraseña);
-    		/*if (loginUsuario.getText().isEmpty()) {
-    			
-    		}*/
-    		
-    			if (usuarioDAO.comprovacionUsuario(loginUsuario.getText(), contraseña.getText()) ) {
-        			System.out.println(loginUsuario.getText() + contraseña.getText());
-        			dialogStage.close();
-        			usuarioExiste = true;
-    			}
-    			else {
-    				errorLogin.setText("Usuario o Contraseña Incorrectas");
-    			}
-    			System.out.println(loginUsuario.getText() + contraseña.getText());
-        		usuarioDAO.comprovacionUsuario(loginUsuario.getText(), contraseña.getText());
-        		
-    	}catch(SQLException e){
-    		System.err.println("buttonDelete ::  ERROR" + e.getMessage());
-    		 // Nothing selected.
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.initOwner(mainApp.getPrimaryStage());
-            alert.setTitle("");
-            alert.setHeaderText("No Usuario Selected");
-            alert.setContentText("Please select a Usuario in the table.");
-            
-            alert.showAndWait();
-    		
-    	}
-    	System.out.println("USUARIO EXISTE " + usuarioExiste);
-		return usuarioExiste;
-    	
-    	
-
-    }
     
-    public boolean usuarioExiste() throws SQLException {
-    	usuarioDAO = new UsuarioDAO();
-    	if (usuarioDAO.comprovacionUsuario(loginUsuario.getText(), contraseña.getText()) )	usuarioExiste = true;
-    	else usuarioExiste = false;
-    	
-    	return usuarioExiste;
-    }
-    public InicioSesionController() {	
-    }
     /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
      */
     @FXML
     private void initialize() {
+    	System.out.println(" Iniciando InicioSesionController initialize ...");       
     }
-
+    
     /**
      * Sets the stage of this dialog.
      * 
@@ -110,6 +62,77 @@ public class InicioSesionController {
         this.dialogStage = dialogStage;
     }
     
+    
+    
+    /**
+     * Returns true if the user clicked OK, false otherwise.
+     * 
+     * @return
+     */
+    public UsuarioVO getUsuarioVO() {
+        return usuario;
+    }
+    
+    @FXML
+    public UsuarioVO aceptarClicked() throws SQLException {
+    	System.out.println(" Iniciando aceptarClicked ...");
+	    try {
+		    		usuarioDAO = new UsuarioDAO();
+		    		
+		    		System.out.println(" aceptarClicked login - password " + loginUsuario.getText() + " " + contraseña.getText());
+		    		usuario = usuarioDAO.comprovacionUsuario(loginUsuario.getText(), contraseña.getText());
+		    		System.out.println(" Iniciando aceptarClicked usuario existe " + usuarioExiste);
+		    		// esto funciona, pero no entiendo porque not peta el programa al encontrar null
+		    		// if(usuarioDAO.confirmacionUsuario(loginUsuario.getText(), contraseña.getText()))
+		    		if(usuario != null) {
+		    			 okClicked = true;
+		    	         dialogStage.close();
+		    	         System.out.println(usuarioDAO.confirmacionUsuario(loginUsuario.getText(), contraseña.getText()));
+		    		}else  {
+		    			
+		    			errorLogin.setText("Usuario o Contraseña Incorrectas");
+		    		}
+		    		
+		    		
+		    		
+	        		
+	    	}catch(SQLException e){
+	    		System.err.println("buttonDelete ::  ERROR" + e.getMessage());
+	    		 // Nothing selected.
+	            Alert alert = new Alert(AlertType.ERROR);
+	            alert.initOwner(mainApp.getPrimaryStage());
+	            alert.setTitle("");
+	            alert.setHeaderText("No Usuario Selected");
+	            alert.setContentText("Please select a Usuario in the table.");
+	            
+	            alert.showAndWait();
+	    		
+	    	}
+	    	
+    	
+    	//if(dialogStage != null)dialogStage.close();
+    	return usuario;
+    	
+    }
+    
+    /*
+    
+    public boolean usuarioExiste() throws SQLException {
+    	usuarioDAO = new UsuarioDAO();
+    	if (usuarioDAO.comprovacionUsuario(loginUsuario.getText(), contraseña.getText()) )	usuarioExiste = true;
+    	else usuarioExiste = false;
+    	
+    	return usuarioExiste;
+    }
+    */
+    
+    public InicioSesionController() {	
+    }
+   
+
+  
+    
+ 
 
     /**
      * Devuelve true si el usuario está en la base de datos
@@ -135,8 +158,6 @@ public class InicioSesionController {
         if (is Aceptar()) {
             empleat.setEmpno(String.valueOf(empnoField.getText()));
             empleat.setEname(enameField.getText());
-
-
             okClicked = true;
             dialogStage.close();
         }
@@ -149,7 +170,6 @@ public class InicioSesionController {
     /*private void handleCancel() {
         dialogStage.close();
     }
-
     /**
      * Validates the user input in the text fields.
      * 
@@ -157,7 +177,6 @@ public class InicioSesionController {
      */
     /*private boolean isInputValid() {
         String errorMessage = "";
-
         if (firstNameField.getText() == null || firstNameField.getText().length() == 0) {
             errorMessage += "No valid first name!\n"; 
         }
@@ -167,7 +186,6 @@ public class InicioSesionController {
         if (streetField.getText() == null || streetField.getText().length() == 0) {
             errorMessage += "No valid street!\n"; 
         }
-
         if (postalCodeField.getText() == null || postalCodeField.getText().length() == 0) {
             errorMessage += "No valid postal code!\n"; 
         } else {
@@ -178,11 +196,9 @@ public class InicioSesionController {
                 errorMessage += "No valid postal code (must be an integer)!\n"; 
             }
         }
-
         if (cityField.getText() == null || cityField.getText().length() == 0) {
             errorMessage += "No valid city!\n"; 
         }
-
         if (birthdayField.getText() == null || birthdayField.getText().length() == 0) {
             errorMessage += "No valid birthday!\n";
         } else {
@@ -190,7 +206,6 @@ public class InicioSesionController {
                 errorMessage += "No valid birthday. Use the format dd.mm.yyyy!\n";
             }
         }
-
         if (errorMessage.length() == 0) {
             return true;
         } else {

@@ -8,7 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="315.0" prefWidth="413.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nt.NekoTrastos.view.InicioSesionController">
+<AnchorPane prefHeight="315.0" prefWidth="413.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nt.nekotrastos.view.InicioSesionController">
    <children>
       <ButtonBar layoutX="176.0" layoutY="233.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
       <Button layoutX="171.0" layoutY="14.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="232.0" text="Crear tu cuenta de Neko Trastos" />

@@ -1,4 +1,4 @@
-package com.nt.NekoTrastos.model;
+package com.nt.nekotrastos.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.nt.NekoTrastos.util.ConnectionDB;
+import com.nt.nekotrastos.util.ConnectionDB;
 public class UsuarioDAO {
 	
 	
@@ -22,11 +22,7 @@ public class UsuarioDAO {
 		ConnectionDB connDB = new ConnectionDB();
 		conn = connDB.getConnection();
 		return conn;
-		
 	}
-	
-
-	
 	
 	/**
 	 * Obté tots els empleats de la base de dades
@@ -99,7 +95,43 @@ public class UsuarioDAO {
 		}
 	}
 	
-	public boolean comprovacionUsuario(String id_Usuario, String contraseña) throws SQLException {
+	public UsuarioVO comprovacionUsuario(String id_Usuario, String contraseña) throws SQLException {
+		System.out.println("iniciando comprovacionUsuario ...");
+		boolean bUsuarioValido = false;
+		UsuarioVO usuario = null;
+		
+		try {
+			connection = getConnection();
+			System.out.println("Dins buscarUsuario con id " + id_Usuario + " contraseña " + contraseña);
+			// Cuidao canviar
+			ps = connection.prepareStatement("SELECT * FROM Usuario WHERE  ID_Usuario LIKE ? AND Contraseña LIKE ?");
+			ps.setString(1, id_Usuario);
+			ps.setString(2, contraseña);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				usuario = new UsuarioVO(rs.getString(1), rs.getString(2));
+			}
+			
+			System.out.println("comprovacionUsuario usuario valido " + bUsuarioValido);
+			return usuario;
+		
+		}
+		catch(SQLException e) {
+			System.err.println("Busqueda" + e.getMessage());
+			throw e;
+		}
+		finally {
+			try {
+				if(ps!=null) ps.close();
+				if(connection!=null) connection.close();
+			}catch(SQLException e) {
+				System.err.println("BusquedaUsuario" + e.getMessage());
+			}catch (Exception e) {
+				System.err.println("BusquedaUsuario" + e.getMessage());
+			}
+		}
+	}
+	public boolean confirmacionUsuario(String id_Usuario, String contraseña) throws SQLException {
 		UsuarioVO usuarioVOAux;
 		ArrayList<UsuarioVO> usuarioList;
 		

@@ -1,13 +1,13 @@
-package com.nt.NekoTrastos.view;
+package com.nt.nekotrastos.view;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.nt.NekoTrastos.MainApp;
-import com.nt.NekoTrastos.model.TrastoDAO;
-import com.nt.NekoTrastos.model.TrastoVO;
-import com.nt.NekoTrastos.model.UsuarioDAO;
+import com.nt.nekotrastos.MainApp;
+import com.nt.nekotrastos.model.TrastoDAO;
+import com.nt.nekotrastos.model.TrastoVO;
+import com.nt.nekotrastos.model.UsuarioDAO;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -35,9 +35,13 @@ public class TrastoOverviewController {
     @FXML
     private TableColumn<TrastoVO, String> id_propietarioColumn;
     @FXML
+    private Button onIniciSession;
+    @FXML
 	private TextField barraBuscadorra;
     @FXML
     private Button misTrastosButton;
+    @FXML
+    private Button misChatsButton;
 
     /*@FXML
     private Label id_Productolabel;
@@ -108,6 +112,12 @@ public class TrastoOverviewController {
     	
    
     }
+    
+    @FXML
+    public void entrarMisChats() throws SQLException {	
+    	
+   
+    }
 
     /**
      * The constructor.
@@ -157,30 +167,36 @@ public class TrastoOverviewController {
     
    @FXML 
    public void onIniciSession() throws SQLException, IOException {
-	   FXMLLoader loader = new FXMLLoader();	
+	   System.out.println("Iniciado onIniciSession .... ");
+	   
+	   FXMLLoader loader = new FXMLLoader();
 	   loader.setLocation(getClass().getResource("IniciarSesion.fxml"));
 	   loader.load();
 	   controllerCamuflajeBotones = loader.getController();
     	this.mainApp.iniSession();
-    	prueba = controllerCamuflajeBotones.aceptarClicked();
-    	if(prueba) {
+
+    	if(this.mainApp.getUsuarioLogin() != null) {
+    		System.out.println("Iniciado onIniciSession sesionLogin ok ");
     		mostrarBoton(misTrastosButton);
-    		System.out.println("QUE VOYYYYYY " + controllerCamuflajeBotones.aceptarClicked());
+    		//mostrarBoton(misChatsButton);
+    		//ocultarBoton(onIniciSession);
+    		
     	}
     	else {
-    		mostrarBoton(misTrastosButton);
+    		ocultarBoton(misTrastosButton);
+    		//ocultarBoton(misChatsButton);
+    		//mostrarBoton(onIniciSession);
     	}
    
-    	System.out.println(prueba);
-    	/*else {
-    		mostrarBoton(misTrastosButton);
-    		System.out.println("LO QUE QUIERAAA " + controllerCamuflajeBotones.aceptarClicked());
-    	}*/
+    	   System.out.println("Fin onIniciSession. ");
+    	   
+    	
     }
    
    void ocultarBoton (Control boton) {
 	   boton.setVisible(false);
-	   boton.setManaged(false);
+	   boton.setManaged(true);
+	   
 }
    void mostrarBoton (Control boton) {
 	   boton.setVisible(true);
@@ -201,7 +217,6 @@ public class TrastoOverviewController {
         	descripcionlabel.setText(trasto.getDescripcion());
         	preciolabel.setText(String.valueOf(trasto.getPrecio()));
         	id_Propietariolabel.setText(trasto.getID_Propietario());
-
         } else {
             // Person is null, remove all the text.
         	id_Productolabel.setText("");
@@ -251,7 +266,6 @@ private void handleDeletePerson() {
 	    		alert.setTitle("Information Dialog");
 	    		alert.setHeaderText(null);
 	    		alert.setContentText("I have a great message for you!");
-
 	    		alert.showAndWait();
 	        }
 	        
@@ -261,7 +275,6 @@ private void handleDeletePerson() {
     		alert.setTitle("Information Dialog");
     		alert.setHeaderText(null);
     		alert.setContentText("I have a great message for you!");
-
     		alert.showAndWait();
     	}
     }
@@ -294,7 +307,6 @@ private void handleDeletePerson() {
             if (okClicked) {
                 showPersonDetails(selectedPerson);
             }
-
         } else {
             // Nothing selected.
             Dialogs.create()

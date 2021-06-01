@@ -1,4 +1,4 @@
-package com.nt.NekoTrastos.model;
+package com.nt.nekotrastos.model;
 
 public class TrastoVO {
 	/*** ATRIBUTS ***/

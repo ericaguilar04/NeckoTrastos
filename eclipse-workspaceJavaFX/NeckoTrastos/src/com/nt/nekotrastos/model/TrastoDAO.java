@@ -1,4 +1,4 @@
-package com.nt.NekoTrastos.model;
+package com.nt.nekotrastos.model;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.nt.NekoTrastos.util.ConnectionDB;
+import com.nt.nekotrastos.util.ConnectionDB;
 public class TrastoDAO {
 	
 	
@@ -24,9 +24,6 @@ public class TrastoDAO {
 		conn = connDB.getConnection();
 		return conn;
 	}
-	
-
-	
 	
 	/**
 	 * Obté tots els empleats de la base de dades
@@ -137,5 +134,3 @@ public class TrastoDAO {
 		}
 	}
 }
-	
-	

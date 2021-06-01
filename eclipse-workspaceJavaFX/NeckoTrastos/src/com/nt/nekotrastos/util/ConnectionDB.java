@@ -1,4 +1,4 @@
-package com.nt.NekoTrastos.util;
+package com.nt.nekotrastos.util;
 import java.sql.*;
 import java.sql.SQLException;
 
@@ -15,7 +15,4 @@ public class ConnectionDB {
 		comm = DriverManager.getConnection(url, user, passwd);
 		return comm;
 	}
-	
-	
-	
 }

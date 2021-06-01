@@ -1,4 +1,4 @@
-package com.nt.NekoTrastos.model;
+package com.nt.nekotrastos.model;
 
 public class UsuarioVO {
 	/*** ATRIBUTS ***/
@@ -22,6 +22,13 @@ public class UsuarioVO {
 		this.contrasenya = contrasenya;
 		this.telefono = telefono;
 		this.correo = correo;
+	}
+	
+	
+
+	public UsuarioVO(String id_Usuario, String nombre) {
+		this.id_Usuario = id_Usuario;
+		this.nombre = nombre;
 	}
 
 	public String getId_Usuario() {
