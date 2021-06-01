@@ -11,7 +11,7 @@ import com.nt.nekotrastos.model.UsuarioDAO;
 import com.nt.nekotrastos.model.UsuarioVO;
 import com.nt.nekotrastos.view.InicioSesionController;
 //import com.nt.NekoTrastos.view.TrastoEditDialogController;
-import com.nt.nekotrastos.view.TrastoOverviewController;
+import com.nt.nekotrastos.view.MenuInicialOverviewController;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -148,7 +148,7 @@ public class MainApp extends Application {
             rootLayout.setCenter(menuInicialOverview);
             
             // Cuidao comenta estas dos linias y funciona lo que tenemos	/////////////////////////
-            TrastoOverviewController controller = loader.getController();
+            MenuInicialOverviewController controller = loader.getController();
             controller.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();

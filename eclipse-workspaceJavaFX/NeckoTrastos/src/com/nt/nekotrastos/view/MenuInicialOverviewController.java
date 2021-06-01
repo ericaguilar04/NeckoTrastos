@@ -22,7 +22,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 
-public class TrastoOverviewController {
+public class MenuInicialOverviewController {
 	
     @FXML
     private TableView<TrastoVO> trastosTable;
@@ -35,7 +35,7 @@ public class TrastoOverviewController {
     @FXML
     private TableColumn<TrastoVO, String> id_propietarioColumn;
     @FXML
-    private Button onIniciSession;
+    private Button onIniciSessionButton;
     @FXML
 	private TextField barraBuscadorra;
     @FXML
@@ -123,7 +123,7 @@ public class TrastoOverviewController {
      * The constructor.
      * The constructor is called before the initialize() method.
      */
-    public TrastoOverviewController() {
+    public MenuInicialOverviewController() {
     }
 
     /**
@@ -178,14 +178,14 @@ public class TrastoOverviewController {
     	if(this.mainApp.getUsuarioLogin() != null) {
     		System.out.println("Iniciado onIniciSession sesionLogin ok ");
     		mostrarBoton(misTrastosButton);
-    		//mostrarBoton(misChatsButton);
-    		//ocultarBoton(onIniciSession);
+    		mostrarBoton(misChatsButton);
+    		ocultarBoton(onIniciSessionButton);
     		
     	}
     	else {
     		ocultarBoton(misTrastosButton);
-    		//ocultarBoton(misChatsButton);
-    		//mostrarBoton(onIniciSession);
+    		ocultarBoton(misChatsButton);
+    		mostrarBoton(onIniciSessionButton);
     	}
    
     	   System.out.println("Fin onIniciSession. ");
