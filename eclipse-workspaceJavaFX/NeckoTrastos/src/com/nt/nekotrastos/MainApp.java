@@ -54,26 +54,12 @@ public class MainApp extends Application {
 	
 	
 	public MainApp() throws InvocationTargetException {
-		ArrayList<TrastoVO> llistaTrastos;
-		
-		
-		try {
-			trastoDAO = new TrastoDAO();
-			llistaTrastos = trastoDAO.obtenirTotsTrastos();	// lista para enviar al menú inicial
-			
-			
-			for(int i=0; i< llistaTrastos.size();i++) {						// Guarda todos los trastos de la base de datos (menú inical)
-				trastoData.add(llistaTrastos.get(i));
-				System.out.println(llistaTrastos.get(i).getID_Producto());
-				System.out.println(llistaTrastos.get(i).getDescripcion());
-			}
-			
-			
-		}catch(SQLException e) {
-			System.err.println("MainApp :: " + e.getMessage());
-		}
+
 		
 		ArrayList<UsuarioVO> llistaUsuarios;
+		
+		//Se cargan trastos a llistaTrastos
+		cargarTrastos();
 		
 		try {
 			usuarioDAO = new UsuarioDAO();
@@ -168,7 +154,18 @@ public class MainApp extends Application {
      * Muestra la vista del menú inicial dentro del root layout
      */
     public void showMenuInicial() {
+    
+    	System.out.println("MainApp.shoeMenuInicial iniciando...");
+    	
+    	//Es netejen totes les llistes
+    	trastoData.clear();
+    	trastoDataUsuario.clear();
+    	//tornem a carregar tots els trasots del menu incici
+    	cargarTrastos();
+    	
         try {
+        	
+        	
             // Carga el diseño de la vista de un archivo fxml (propiedades)
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/MenuInicial.fxml"));
@@ -180,6 +177,9 @@ public class MainApp extends Application {
             // Cuidao comenta estas dos linias y funciona lo que tenemos	/////////////////////////
             MenuInicialOverviewController controller = loader.getController();
             controller.setMainApp(this);
+            
+            //Visibiliadad botones
+            controller.visibilidadBotonesSesion(this.usuarioLogin);
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Error al cargar la escena del menú inicial");
@@ -245,12 +245,12 @@ public class MainApp extends Application {
     
     
     /**
-     * Returns true if the user clicked OK, false otherwise.
+     * Devuelve todos los datos del usuario logeado
      * 
      * @return
      */
     public UsuarioVO getUsuarioLogin() {
-    	System.out.println("USUARIO DEVUELTO: " + usuarioLogin.getId_Usuario());
+    	//System.out.println("USUARIO DEVUELTO: " + usuarioLogin.getId_Usuario());
         return usuarioLogin;
     }
     
@@ -294,5 +294,31 @@ public class MainApp extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+    }
+    
+    
+    /**
+     * 
+     */
+    private void cargarTrastos() {
+    	
+    	ArrayList<TrastoVO> llistaTrastos;
+		
+		
+		try {
+			trastoDAO = new TrastoDAO();
+			llistaTrastos = trastoDAO.obtenirTotsTrastos();	// lista para enviar al menú inicial
+			
+			
+			for(int i=0; i< llistaTrastos.size();i++) {						// Guarda todos los trastos de la base de datos (menú inical)
+				trastoData.add(llistaTrastos.get(i));
+				System.out.println(llistaTrastos.get(i).getID_Producto());
+				System.out.println(llistaTrastos.get(i).getDescripcion());
+			}
+			
+			
+		}catch(SQLException e) {
+			System.err.println("MainApp :: " + e.getMessage());
+		}
     }
 }

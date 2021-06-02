@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.nt.nekotrastos.MainApp;
 import com.nt.nekotrastos.model.TrastoDAO;
 import com.nt.nekotrastos.model.TrastoVO;
+import com.nt.nekotrastos.model.UsuarioVO;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -26,7 +27,7 @@ public class MisTrastosController {
    
     private MainApp mainApp;		// instància para llamar los metodos de la MainApp
     private TrastoDAO trastoDAO;	// Instancia para almazenar los datos de los trastos del usuario que haya iniciado sesión
-    
+    private UsuarioVO usuarioSesionIniciada;	// Guardamos los datos del usuario logeado
 	/**
 	 * Inicializa los datos con 3 columnas de los métodos de la clase TrastoVO
 	 * @throws SQLException 
@@ -58,6 +59,7 @@ public class MisTrastosController {
         // Add observable list data to the table
         this.mainApp.cargarTablaMisTrastos();
         trastosTable.setItems(this.mainApp.getMisTrastosData());
+        
     }
     
     /*
@@ -65,7 +67,13 @@ public class MisTrastosController {
      */
     @FXML
     public void atras() {
+    	System.out.println("MisTrastosConroller.atras Iniciando...");
+    	
+    	//amagar botons
+    	
     	this.mainApp.showMenuInicial();
+    	
+    	
     }
     
 }

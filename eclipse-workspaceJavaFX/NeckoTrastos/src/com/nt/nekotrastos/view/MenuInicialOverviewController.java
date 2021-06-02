@@ -8,6 +8,7 @@ import com.nt.nekotrastos.MainApp;
 import com.nt.nekotrastos.model.TrastoDAO;
 import com.nt.nekotrastos.model.TrastoVO;
 import com.nt.nekotrastos.model.UsuarioDAO;
+import com.nt.nekotrastos.model.UsuarioVO;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -42,6 +43,8 @@ public class MenuInicialOverviewController {
     private Button misTrastosButton;
     @FXML
     private Button misChatsButton;
+    @FXML
+    private Button cerrarSesionButton;
 
     /*@FXML
     private Label id_Productolabel;
@@ -61,7 +64,9 @@ public class MenuInicialOverviewController {
     private UsuarioDAO usuarioDAO;
     private InicioSesionController controllerCamuflajeBotones;
     private Stage dialogStage;
+    private UsuarioVO usuarioSesionIniciada;	// Guardamos los datos del usuario logeado
     private boolean prueba;
+    
     
     
     
@@ -163,7 +168,7 @@ public class MenuInicialOverviewController {
      */
     @FXML
     private void initialize() {
-    	System.out.println("initialize");
+    	System.out.println("MenuInicialController.initialize iniciando...");
         // Initialize the trasto table with the 4 columns.
     	nombreTrastoColumn.setCellValueFactory(
                 cellData -> new  SimpleStringProperty(cellData.getValue().getNombreTrasto()));
@@ -177,8 +182,9 @@ public class MenuInicialOverviewController {
 
        // Clear person details.
         //showTrastoDetails(null);
+    	
+       
         
-        System.out.println(trastosTable == null);
 
         // Listen for selection changes and show the person details when changed.
         //trastosTable.getSelectionModel().selectedItemProperty().addListener(
@@ -205,31 +211,48 @@ public class MenuInicialOverviewController {
 	   loader.load();
 	   controllerCamuflajeBotones = loader.getController();
     	this.mainApp.iniSession();
+    	visibilidadBotonesSesion(this.mainApp.getUsuarioLogin());
 
-    	if(this.mainApp.getUsuarioLogin() != null) {
-    		System.out.println("Iniciado onIniciSession sesionLogin ok ");
-    		mostrarBoton(misTrastosButton);
-    		mostrarBoton(misChatsButton);
-    		ocultarBoton(onIniciSessionButton);
-    		
-    	}
-    	else {
-    		ocultarBoton(misTrastosButton);
-    		ocultarBoton(misChatsButton);
-    		mostrarBoton(onIniciSessionButton);
-    	}
-   
     	   System.out.println("Fin onIniciSession. ");
     	   
     	
     }
    
-   void ocultarBoton (Control boton) {
+   @FXML
+   public void onCerrarSession() {
+	   System.out.println("Iniciando onCerrarSession");
+	   visibilidadBotonesSesion(null);
+   }
+   
+   /**
+    * 
+    * @param usuarioLogin
+    */
+   public void visibilidadBotonesSesion(UsuarioVO usuarioLogin) {
+   
+	   if(usuarioLogin!= null) {
+			System.out.println("Iniciado MenuInicialController.isibilidadBotonesSesion sesionLogin ok ");
+			mostrarBoton(misTrastosButton);
+			mostrarBoton(misChatsButton);
+			ocultarBoton(onIniciSessionButton);
+			mostrarBoton(cerrarSesionButton);
+		}
+		else {
+			System.out.println("Iniciado MenuInicialController..visibilidadBotonesSesion sesionLogin false ");
+			ocultarBoton(misTrastosButton);
+			ocultarBoton(misChatsButton);
+			mostrarBoton(onIniciSessionButton);
+			ocultarBoton(cerrarSesionButton);
+		}
+   }
+   
+   
+   private void ocultarBoton (Control boton) {
 	   boton.setVisible(false);
 	   boton.setManaged(true);
 	   
 }
-   void mostrarBoton (Control boton) {
+   private void mostrarBoton (Control boton) {
 	   boton.setVisible(true);
 	   boton.setManaged(true);
 }
