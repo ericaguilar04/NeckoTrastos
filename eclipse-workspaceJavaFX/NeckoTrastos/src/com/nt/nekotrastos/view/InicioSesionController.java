@@ -87,7 +87,7 @@ public class InicioSesionController {
 		    		if(usuario != null) {
 		    			 okClicked = true;
 		    	         dialogStage.close();
-		    	         System.out.println(usuarioDAO.confirmacionUsuario(loginUsuario.getText(), contraseña.getText()));
+		    	        
 		    		}else  {
 		    			
 		    			errorLogin.setText("Usuario o Contraseña Incorrectas");

@@ -109,7 +109,38 @@ public class MenuInicialOverviewController {
      */
     @FXML
     public void entrarMisTrastos() throws SQLException {	
+    	ArrayList<TrastoVO> trastosList;
     	
+    	try {
+    	
+    		trastoDAO = new TrastoDAO();
+        	trastosList = trastoDAO.obtenerTrastosDeMisTrastos(this.mainApp.getUsuarioLogin().getId_Usuario());
+        	
+        	//Netejar la llista d'empleats
+        	trastosTable.getItems().clear();
+        	
+        	//carregarlos a empleatable
+        	for(int i=0; i<trastosList.size();i++) {
+        		trastosTable.getItems().add(trastosList.get(i));
+    		}
+        	
+      
+        
+    	}catch(SQLException e){
+    		System.err.println("buttonDelete ::  ERROR" + e.getMessage());
+    		 // Nothing selected.
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.initOwner(mainApp.getPrimaryStage());
+            alert.setTitle("");
+            alert.setHeaderText("No Person Selected");
+            alert.setContentText("Please select a person in the table.");
+            
+            alert.showAndWait();
+    		
+    	}
+    
+    	
+    	this.mainApp.showMisTrastos();
    
     }
     

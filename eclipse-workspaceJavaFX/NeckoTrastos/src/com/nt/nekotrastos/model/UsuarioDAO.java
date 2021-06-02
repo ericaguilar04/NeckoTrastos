@@ -131,38 +131,5 @@ public class UsuarioDAO {
 			}
 		}
 	}
-	public boolean confirmacionUsuario(String id_Usuario, String contraseña) throws SQLException {
-		UsuarioVO usuarioVOAux;
-		ArrayList<UsuarioVO> usuarioList;
-		
-		
-		try {
-			connection = getConnection();
-			System.out.println("Dins buscarUsuario");
-			// Cuidao canviar
-			ps = connection.prepareStatement("SELECT * FROM Usuario WHERE ID_Usuario = ? AND Contraseña = ?");
-			ps.setString(1, id_Usuario);
-			ps.setString(2, contraseña);
-			ResultSet rs = ps.executeQuery();
-			
-			//usuarioList = new ArrayList<UsuarioVO>();
-			//System.out.println("El usuario es :" + rs.next());
-			return rs.next();
-		
-		}
-		catch(SQLException e) {
-			System.err.println("Busqueda" + e.getMessage());
-			throw e;
-		}
-		finally {
-			try {
-				if(ps!=null) ps.close();
-				if(connection!=null) connection.close();
-			}catch(SQLException e) {
-				System.err.println("BusquedaUsuario" + e.getMessage());
-			}catch (Exception e) {
-				System.err.println("BusquedaUsuario" + e.getMessage());
-			}
-		}
-	}
+
 }

@@ -12,6 +12,7 @@ import com.nt.nekotrastos.model.UsuarioVO;
 import com.nt.nekotrastos.view.InicioSesionController;
 //import com.nt.NekoTrastos.view.TrastoEditDialogController;
 import com.nt.nekotrastos.view.MenuInicialOverviewController;
+import com.nt.nekotrastos.view.MisTrastosController;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -35,9 +36,13 @@ public class MainApp extends Application {
     // ... AFTER THE OTHER VARIABLES ...
 
 	/**
-	 * The data as an observable list of Trastos.
+	 * Datos de una lista observable de todos los trastos
 	 */
 	private ObservableList<TrastoVO> trastoData = FXCollections.observableArrayList();
+	/**
+	 * Datos de una lista observable de mis Trastos
+	 */
+	private ObservableList<TrastoVO> trastoDataUsuario = FXCollections.observableArrayList();
 	/**
 	 * The data as a observable list of Usuarios.
 	 */
@@ -51,15 +56,19 @@ public class MainApp extends Application {
 	public MainApp() throws InvocationTargetException {
 		ArrayList<TrastoVO> llistaTrastos;
 		
+		
 		try {
 			trastoDAO = new TrastoDAO();
-			llistaTrastos = trastoDAO.obtenirTotsTrastos();
+			llistaTrastos = trastoDAO.obtenirTotsTrastos();	// lista para enviar al menú inicial
 			
-			for(int i=0; i< llistaTrastos.size();i++) {
+			
+			for(int i=0; i< llistaTrastos.size();i++) {						// Guarda todos los trastos de la base de datos (menú inical)
 				trastoData.add(llistaTrastos.get(i));
 				System.out.println(llistaTrastos.get(i).getID_Producto());
 				System.out.println(llistaTrastos.get(i).getDescripcion());
 			}
+			
+			
 		}catch(SQLException e) {
 			System.err.println("MainApp :: " + e.getMessage());
 		}
@@ -84,12 +93,21 @@ public class MainApp extends Application {
 	
   
 	/**
-	 * Returns the data as an observable list of Persons. 
+	 * Devuelve una lista observable de todos los trastos (menú inicial). 
 	 * @return
 	 */
 	public ObservableList<TrastoVO> getTrastoData() {
 	
 		return trastoData;
+	}
+	
+	/**
+	 * Devuelve una lista observable de los trastos del usuario logeado (mis trastos)
+	 * @return
+	 */
+	public ObservableList<TrastoVO> getMisTrastosData() {
+
+		return trastoDataUsuario;
 	}
 	/**
 	 * Devuelve los datos de la tabla Usuario de la lista Usuarios
@@ -111,6 +129,18 @@ public class MainApp extends Application {
 
         showMenuInicial();						// Carga los elementos de la ventana inicializada
         
+    }
+    
+    public void cargarTablaMisTrastos() throws SQLException {
+    	ArrayList<TrastoVO> llistaTrastosUsuario;
+    	
+    	llistaTrastosUsuario = trastoDAO.obtenerTrastosDeMisTrastos(this.getUsuarioLogin().getId_Usuario());
+    	
+    	for(int i=0; i< llistaTrastosUsuario.size();i++) {						// Guarda todos los trastos del usuario logueado (mis trastos)
+			trastoDataUsuario.add(llistaTrastosUsuario.get(i));
+			System.out.println(llistaTrastosUsuario.get(i).getID_Producto());
+			System.out.println(llistaTrastosUsuario.get(i).getDescripcion());
+		}
     }
 
     /**
@@ -192,6 +222,27 @@ public class MainApp extends Application {
 		
     }
     
+    public void showMisTrastos() throws SQLException {
+        try {
+            // Carga el diseño de la vista de un archivo fxml (propiedades)
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/MisTrastos.fxml"));
+            AnchorPane misTrastosOverview = (AnchorPane) loader.load();
+
+            // Carga la vista del menú inicial dentro de root layout (Escena)
+            rootLayout.setCenter(misTrastosOverview);
+            
+            // Cuidao comenta estas dos linias y funciona lo que tenemos	/////////////////////////
+            MisTrastosController controller = loader.getController();
+            controller.setMainApp(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error al cargar la escena del menú inicial");
+        }
+    }
+    
+  
+    
     
     /**
      * Returns true if the user clicked OK, false otherwise.
@@ -199,6 +250,7 @@ public class MainApp extends Application {
      * @return
      */
     public UsuarioVO getUsuarioLogin() {
+    	System.out.println("USUARIO DEVUELTO: " + usuarioLogin.getId_Usuario());
         return usuarioLogin;
     }
     
