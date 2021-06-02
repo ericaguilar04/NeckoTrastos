@@ -70,17 +70,18 @@ public class TrastoDAO {
 		
 	}
 	
-	public  void deleteTrasto(int nEmpno) throws SQLException {
+	public void insertTrasto(String nombreTrasto, String descripcion) throws SQLException {
 		try {
 			connection = getConnection();
-			System.out.println("Dins deleteEMP");
-			ps = connection.prepareStatement("DELETE FROM Trastos WHERE ID_Producto = ?");
-			ps.setInt(1, nEmpno);
-			
+			System.out.println("Dins Afegir Trasto");
+			ps = connection.prepareStatement("INSERT INTO Trastos (NombreTrasto, Descripción) VALUES(?, ?)");
+
+			ps.setString(1, nombreTrasto);
+			ps.setString(2, descripcion);
 			ps.executeUpdate();
 		}
 		catch(SQLException e) {
-			System.err.println("deleteEMP" + e.getMessage());
+			System.err.println("Insert Trasto" + e.getMessage());
 			throw e;
 		}
 		finally {
@@ -88,9 +89,34 @@ public class TrastoDAO {
 				if(ps!=null) ps.close();
 				if(connection!=null) connection.close();
 			}catch(SQLException e) {
-				System.err.println("deleteEMP" + e.getMessage());
+				System.err.println("Insert Trasto" + e.getMessage());
 			}catch (Exception e) {
-				System.err.println("deleteEMP" + e.getMessage());
+				System.err.println("Insert Trasto" + e.getMessage());
+			}
+		}
+	}
+	
+	public  void deleteTrasto(int id_Producto) throws SQLException {
+		try {
+			connection = getConnection();
+			System.out.println("Dins deleteTrasto");
+			ps = connection.prepareStatement("DELETE FROM Trastos WHERE ID_Producto = ?");
+			ps.setInt(1, id_Producto);
+			
+			ps.executeUpdate();
+		}
+		catch(SQLException e) {
+			System.err.println("delete Trasto" + e.getMessage());
+			throw e;
+		}
+		finally {
+			try {
+				if(ps!=null) ps.close();
+				if(connection!=null) connection.close();
+			}catch(SQLException e) {
+				System.err.println("delete Trasto" + e.getMessage());
+			}catch (Exception e) {
+				System.err.println("delete Trasto" + e.getMessage());
 			}
 		}
 	}

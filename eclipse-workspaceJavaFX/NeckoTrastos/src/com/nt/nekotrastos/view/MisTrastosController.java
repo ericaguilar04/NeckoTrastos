@@ -27,6 +27,7 @@ public class MisTrastosController {
    
     private MainApp mainApp;		// instància para llamar los metodos de la MainApp
     private TrastoDAO trastoDAO;	// Instancia para almazenar los datos de los trastos del usuario que haya iniciado sesión
+    private TrastoVO trastoVO;
     private UsuarioVO usuarioSesionIniciada;	// Guardamos los datos del usuario logeado
 	/**
 	 * Inicializa los datos con 3 columnas de los métodos de la clase TrastoVO
@@ -74,6 +75,16 @@ public class MisTrastosController {
     	this.mainApp.showMenuInicial();
     	
     	
+    }
+    
+    @FXML
+    public void añadirTrasto() {
+    	 TrastoVO tempTrasto = new TrastoVO();
+         boolean okClicked = mainApp.showTrastoEditDialog(tempTrasto);
+         if (okClicked) {
+        	 System.out.println("Dentro de añadirTrasto");
+             mainApp.getTrastoData().add(tempTrasto);
+         }
     }
     
 }
