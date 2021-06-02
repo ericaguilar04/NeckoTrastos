@@ -3,6 +3,8 @@ package com.nt.nekotrastos.view;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.controlsfx.dialog.Dialogs;
+
 import com.nt.nekotrastos.MainApp;
 import com.nt.nekotrastos.model.TrastoDAO;
 import com.nt.nekotrastos.model.TrastoVO;
@@ -10,8 +12,10 @@ import com.nt.nekotrastos.model.UsuarioVO;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 
 public class MisTrastosController {
 	
@@ -46,6 +50,13 @@ public class MisTrastosController {
 	    precioColumn.setCellValueFactory(
 	        cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getPrecio())));
 	    
+	    // Clear person details.
+	    showTrastosDetails(null);
+
+	    // Listen for selection changes and show the person details when changed.
+	    trastosTable.getSelectionModel().selectedItemProperty().addListener(
+	            (observable, oldValue, newValue) -> showTrastosDetails(newValue));
+	    
 	   
     }
     
@@ -77,6 +88,59 @@ public class MisTrastosController {
     	
     }
     
+    /**
+     * Called when the user clicks on the delete button.
+     */
+    @FXML
+    private void handleDeletePerson() {
+    	
+    	TrastoVO trastoVO;
+    	int selectedIndex;
+    	ArrayList<TrastoVO> llistaEmpleats;
+    	
+    	try {
+	        
+    		selectedIndex = trastosTable.getSelectionModel().getSelectedIndex();
+	        
+    		if (selectedIndex >= 0) {
+    			
+    			trastoDAO = new TrastoDAO();
+    			//obtenim l'empleat a esborrar
+	        	trastoVO = trastosTable.getItems().get(selectedIndex);
+	        	//Borrem l'empleat a bbdd
+	        	trastoDAO.deleteTrasto(trastoVO.getID_Producto());
+	        	//obtenim totes els empleats
+	        	llistaEmpleats = trastoDAO.obtenerTrastosDeMisTrastos(this.mainApp.getUsuarioLogin().getId_Usuario());
+	        	
+	        	//esborrem totes els dades
+	        	trastosTable.getItems().clear();
+	        	//carreguem  la llista de'mepleats actuatlizada
+	        	for(int i=0; i< llistaEmpleats.size();i++)
+	        		trastosTable.getItems().add(llistaEmpleats.get(i));
+	        	
+	        	
+	        } else {
+	        	// Show the error message.
+	        	Alert alert = new Alert(AlertType.INFORMATION);
+	        	alert.setTitle("Information Dialog");
+	        	alert.setHeaderText("Atención");
+	        	alert.setContentText("Selecciona un trasto");
+
+	        	alert.showAndWait();
+	        }
+	        
+    	}catch(SQLException e) {
+    		System.err.println("handleDeletePerson :: " + e.getMessage());
+    		// Show the error message.
+        	Alert alert = new Alert(AlertType.INFORMATION);
+        	alert.setTitle("Information Dialog");
+        	alert.setHeaderText("Atención");
+        	alert.setContentText("Selecciona un trasto");
+
+        	alert.showAndWait();
+    	}
+    }
+    
     @FXML
     public void añadirTrasto() {
     	 TrastoVO tempTrasto = new TrastoVO();
@@ -87,4 +151,22 @@ public class MisTrastosController {
          }
     }
     
+    private void showTrastosDetails(TrastoVO trasto) {
+        if (trasto != null) {
+            // Fill the labels with info from the person object.
+        	nombreTrastoColumn.setText(trasto.getNombreTrasto());
+        	descripcionColumn.setText(trasto.getDescripcion());
+        	precioColumn.setText(Float.toString(trasto.getPrecio()));
+            
+
+            // TODO: We need a way to convert the birthday into a String! 
+            // birthdayLabel.setText(...);
+        } else {
+            // Person is null, remove all the text.
+        	nombreTrastoColumn.setText("");
+        	descripcionColumn.setText("");
+        	precioColumn.setText("");
+        
+        }
+    }
 }
