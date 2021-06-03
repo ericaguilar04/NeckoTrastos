@@ -12,12 +12,12 @@
       <AnchorPane layoutX="-11.0" layoutY="-24.0" prefHeight="320.0" prefWidth="418.0">
          <children>
             <ImageView fitHeight="60.0" fitWidth="200.0" layoutX="109.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
-            <Label layoutX="109.0" layoutY="85.0" prefHeight="16.0" prefWidth="200.0" text="     Informacin de tu trasto" textAlignment="CENTER" />
+            <Label layoutX="109.0" layoutY="85.0" prefHeight="16.0" prefWidth="200.0" text="     Informacion de tu trasto" textAlignment="CENTER" />
             <TextField fx:id="nombreTrastoField" layoutX="109.0" layoutY="119.0" prefHeight="24.0" prefWidth="200.0" text="Nombre del trasto" />
             <TextField fx:id="descripcioField" layoutX="109.0" layoutY="153.0" prefHeight="24.0" prefWidth="200.0" text="Descripcion" />
             <TextField fx:id="precioField" layoutX="109.0" layoutY="186.0" prefHeight="24.0" prefWidth="200.0" text="Precio" />
             <RadioButton layoutX="170.0" layoutY="232.0" mnemonicParsing="false" text="Vendido" />
-            <Button layoutX="174.0" layoutY="256.0" mnemonicParsing="false" onAction="#handleOk" text="Agregar" />
+            <Button layoutX="174.0" layoutY="256.0" mnemonicParsing="false" onAction="#handleOk" text="Aceptar" />
          </children>
       </AnchorPane>
    </children>

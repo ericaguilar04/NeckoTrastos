@@ -1,6 +1,7 @@
 package com.nt.nekotrastos.view;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.nt.nekotrastos.MainApp;
 import com.nt.nekotrastos.model.TrastoDAO;
@@ -32,9 +33,14 @@ public class TrastoEditDialogController {
 	
 	private Stage dialogStage;
     private TrastoVO trasto;
-    private boolean okClicked = false;	
+    private boolean afegirCliked = false;	
     private TrastoDAO trastoDAO;
     private MainApp mainApp;
+    private String nombreTrasto;
+    private String descripcion;
+    private String precio;
+    private Stage window;
+    
     
     /**
      * Initializes the controller class. This method is automatically called
@@ -50,13 +56,13 @@ public class TrastoEditDialogController {
      * @param mainApp
      * @throws SQLException 
      */
-    public void setMainApp(MainApp mainApp) throws SQLException {
+   /* public void setMainApp(MainApp mainApp) throws SQLException {
         this.mainApp = mainApp;
         // Add observable list data to the table
         this.mainApp.cargarTablaMisTrastos();
         trastosTable.setItems(this.mainApp.getMisTrastosData());
         
-    }
+    }*/
     /**
      * Sets the stage of this dialog.
      * 
@@ -73,9 +79,26 @@ public class TrastoEditDialogController {
      */
     public void setTrasto(TrastoVO trasto) {
         this.trasto = trasto;
-
         
         
+        nombreTrastoField.setText(trasto.getNombreTrasto());
+        descripcioField.setText(trasto.getDescripcion());
+        precioField.setText(Float.toString(trasto.getPrecio()) );
+        
+        
+    }
+    
+    public void setMainApp(MainApp mainApp) throws SQLException {
+        this.mainApp = mainApp;
+        // Add observable list data to the table
+        this.mainApp.cargarTablaMisTrastos();
+        trastosTable.setItems(this.mainApp.getMisTrastosData());
+        
+    }
+    
+    public TrastoVO getTrasto() {
+    	return this.trasto;
+    	
     }
     
     /**
@@ -84,7 +107,7 @@ public class TrastoEditDialogController {
      * @return
      */
     public boolean isAfegirCliked() {
-        return okClicked;
+        return afegirCliked;
     }
     
     /**
@@ -93,19 +116,64 @@ public class TrastoEditDialogController {
      */
     @FXML
     private void handleOk() throws SQLException {
-        if (isInputValid()) {
-            trasto.setNombreTrasto(nombreTrastoField.getText());
-            trasto.setDescripcion(descripcioField.getText());
-            trasto.setPrecio(Float.parseFloat(precioField.getText()));
-           
-            //trasto.setID_Propietario(mainApp.getUsuarioLogin());
-            trastoDAO.insertTrasto(nombreTrastoField.getText(), descripcioField.getText());
-            //trastosTable.
+    	
+    	
+    	int selectedIndex;
+    	ArrayList<TrastoVO> llistaTrastos;
+    	if (isInputValid()) {
+        	
+        	
+        	try {
+        		//window = mainApp.getStage();
+        		trasto.setNombreTrasto(nombreTrastoField.getText());
+                trasto.setDescripcion(descripcioField.getText());
+                trasto.setPrecio(Float.parseFloat(precioField.getText()) );
+               // trasto.setID_Producto();
+                
+        		System.out.println("mainaaaaaap" + mainApp == null);
+    	        //trasto = mainApp.getTrastoEditar();
+        		
+    	        
+        		
+        			
+        			trastoDAO = new TrastoDAO();
+    	        	//Borrem l'empleat a bbdd
+    	        	trastoDAO.editarTrasto(trasto.getNombreTrasto(), trasto.getDescripcion(), trasto.getPrecio(),trasto.getID_Producto());
+    	        	//obtenim totes els empleats
+    	        	mainApp.cargarTablaMisTrastos();
+    	        	llistaTrastos = trastoDAO.obtenerTrastosDeMisTrastos(mainApp.getUsuarioLogin().getId_Usuario());
+    	        	
+    	        	//esborrem totes els dades
+    	        	trastosTable.getItems().clear();
+    	        	//carreguem  la llista de'mepleats actuatlizada
+    	        	for(int i=0; i< llistaTrastos.size();i++)
+    	        		trastosTable.getItems().add(llistaTrastos.get(i));
+    	        	
+    	        	TrastoVO newTrasto = new TrastoVO(trasto.getNombreTrasto(),trasto.getDescripcion(),trasto.getPrecio());
+    	        	TrastoDAO newConnection = new TrastoDAO();
+    	        	newConnection.insertTrasto(newTrasto);
+    	           //empnoField.getText();
+    	        	afegirCliked = true;
+    	            dialogStage.close();
+    	            
+        	}catch(SQLException e) {
+        		System.err.println("handleOk :: " + e.getMessage());
+        		// Show the error message.
+            	Alert alert = new Alert(AlertType.INFORMATION);
+            	alert.setTitle("Information Dialog");
+            	alert.setHeaderText("Atención");
+            	alert.setContentText("Selecciona un trasto");
 
-            okClicked = true;
-            dialogStage.close();
+            	alert.showAndWait();
+        	}
         }
-    }
+    	
+    	afegirCliked = true;
+        dialogStage.close();
+
+            
+        }
+    
     
     /**
      * Validates the user input in the text fields.

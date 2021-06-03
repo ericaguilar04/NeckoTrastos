@@ -36,6 +36,8 @@ public class MenuInicialOverviewController {
     @FXML
     private TableColumn<TrastoVO, String> id_propietarioColumn;
     @FXML
+    private TableColumn<TrastoVO, String> telefonoColumn;
+    @FXML
     private Button onIniciSessionButton;
     @FXML
 	private TextField barraBuscadorra;
@@ -66,7 +68,7 @@ public class MenuInicialOverviewController {
     private Stage dialogStage;
     private UsuarioVO usuarioSesionIniciada;	// Guardamos los datos del usuario logeado
     private boolean prueba;
-    
+    private Stage window;
     
     
     
@@ -78,11 +80,14 @@ public class MenuInicialOverviewController {
     		
     		
     		ArrayList<TrastoVO> trastosList;
+    		
         	
         	try {
         	
         		trastoDAO = new TrastoDAO();
+        		
             	trastosList = trastoDAO.buscarTrasto(barraBuscadorra.getText());
+            	
             	
             	//Netejar la llista d'empleats
             	trastosTable.getItems().clear();
@@ -119,7 +124,7 @@ public class MenuInicialOverviewController {
     	try {
     	
     		trastoDAO = new TrastoDAO();
-        	trastosList = trastoDAO.obtenerTrastosDeMisTrastos(this.mainApp.getUsuarioLogin().getId_Usuario());
+        	trastosList = trastoDAO.obtenerTrastosDeMisTrastos(mainApp.getUsuarioLogin().getId_Usuario());
         	
         	//Netejar la llista d'empleats
         	trastosTable.getItems().clear();
@@ -178,7 +183,8 @@ public class MenuInicialOverviewController {
                 cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getPrecio())));
     	id_propietarioColumn.setCellValueFactory(
                 cellData -> new SimpleStringProperty(cellData.getValue().getID_Propietario()));
-    	
+    	telefonoColumn.setCellValueFactory(
+                cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getTelefono())));
 
        // Clear person details.
         //showTrastoDetails(null);
@@ -200,6 +206,7 @@ public class MenuInicialOverviewController {
         this.mainApp = mainApp;
         // Add observable list data to the table
         trastosTable.setItems(mainApp.getTrastoData());
+        
     }
     
    @FXML 

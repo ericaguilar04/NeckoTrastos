@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.nt.nekotrastos.util.ConnectionDB;
+
 public class TrastoDAO {
 	
 	
@@ -15,6 +16,7 @@ public class TrastoDAO {
 	private  Connection connection;
 	private  PreparedStatement ps;
 	private ResultSet rs;
+	private TrastoDAO updater;
 	
 	
 
@@ -70,29 +72,32 @@ public class TrastoDAO {
 		
 	}
 	
-	public void insertTrasto(String nombreTrasto, String descripcion) throws SQLException {
+	public void insertTrasto(TrastoVO trasto) {
 		try {
 			connection = getConnection();
-			System.out.println("Dins Afegir Trasto");
-			ps = connection.prepareStatement("INSERT INTO Trastos (NombreTrasto, Descripción) VALUES(?, ?)");
-
-			ps.setString(1, nombreTrasto);
-			ps.setString(2, descripcion);
-			ps.executeUpdate();
-		}
-		catch(SQLException e) {
-			System.err.println("Insert Trasto" + e.getMessage());
-			throw e;
-		}
-		finally {
+			PreparedStatement statementTrasto = connection.prepareStatement("INSERT INTO "
+					+ "Trasto(NombreTrasto, Descripción, Precio, ID_Propietario) "
+					+ "VALUES(?, ?, ?, ?)");
+			
+			statementTrasto.setString(1, trasto.getNombreTrasto());
+			statementTrasto.setString(2, trasto.getDescripcion());
+			statementTrasto.setFloat(3, trasto.getPrecio());
+			statementTrasto.setString(4, trasto.getID_Propietario());
+			statementTrasto.executeUpdate();
+			updater = new TrastoDAO();
+			updater.obtenirTotsTrastos();
+		} catch (SQLException e) {
+		} finally {
 			try {
-				if(ps!=null) ps.close();
-				if(connection!=null) connection.close();
-			}catch(SQLException e) {
-				System.err.println("Insert Trasto" + e.getMessage());
-			}catch (Exception e) {
-				System.err.println("Insert Trasto" + e.getMessage());
-			}
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			} catch (SQLException e) {
+				System.out.println("SQLException ERROR");
+			} 
+			catch (Exception e) {
+				System.out.println("ERROR");
+			} 
 		}
 	}
 	
@@ -120,6 +125,35 @@ public class TrastoDAO {
 			}
 		}
 	}
+	
+	public void editarTrasto(String nombreTrasto, String descripcion, float precio, int id_Producto) throws SQLException {
+		try {
+			connection = getConnection();
+			System.out.println("Dins editar Trasto");
+			ps = connection.prepareStatement("UPDATE Trastos SET NombreTrasto = ?, Descripción = ?, Precio = ? WHERE ID_Producto = ?");
+			ps.setString(1, nombreTrasto);
+			ps.setString(2, descripcion);
+			ps.setFloat(3, precio);
+			ps.setInt(4, id_Producto);
+			
+			ps.executeUpdate();
+		}
+		catch(SQLException e) {
+			System.err.println("editar Trasto" + e.getMessage());
+			throw e;
+		}
+		finally {
+			try {
+				if(ps!=null) ps.close();
+				if(connection!=null) connection.close();
+			}catch(SQLException e) {
+				System.err.println("editar Trasto" + e.getMessage());
+			}catch (Exception e) {
+				System.err.println("editar Trasto" + e.getMessage());
+			}
+		}
+	}
+	
 	
 	public ArrayList<TrastoVO> buscarTrasto(String nombreTrasto) throws SQLException {
 		TrastoVO trastoVOAux;

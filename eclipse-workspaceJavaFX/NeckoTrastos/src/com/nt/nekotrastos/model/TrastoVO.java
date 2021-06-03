@@ -7,20 +7,36 @@ public class TrastoVO {
 		private String descripcion;
 		private float precio;
 		private String id_Propietario;
+		private int telefono;
 	
 	/*** default CONSTRUCTOR ***/
 		public TrastoVO() {
 		
 		}
-	
-		public TrastoVO(int id_Producto,String nombreTrasto,String descripcion,float precio,String id_Propietario) {
+		
+		public TrastoVO(String nombreTrasto, String descripcion, float precio) {
+			this.nombreTrasto = nombreTrasto;
+			this.descripcion = descripcion;
+			this.precio = precio;
+		}
+		
+		public TrastoVO(int id_Producto,String nombreTrasto,String descripcion,float precio,String id_Propietario, int telefono) {
 		
 			this.id_Producto = id_Producto;
 			this.nombreTrasto = nombreTrasto;
 			this.descripcion = descripcion;
 			this.precio = precio;
 			this.id_Propietario = id_Propietario;
+			this.telefono = telefono;
 			
+		}
+
+		public int getTelefono() {
+			return telefono;
+		}
+
+		public void setTelefono(int telefono) {
+			this.telefono = telefono;
 		}
 
 		/**

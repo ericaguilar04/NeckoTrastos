@@ -29,10 +29,12 @@ public class MisTrastosController {
     @FXML
     private TableColumn<TrastoVO, String> precioColumn;
    
+   
     private MainApp mainApp;		// instància para llamar los metodos de la MainApp
     private TrastoDAO trastoDAO;	// Instancia para almazenar los datos de los trastos del usuario que haya iniciado sesión
     private TrastoVO trastoVO;
     private UsuarioVO usuarioSesionIniciada;	// Guardamos los datos del usuario logeado
+    private int selectedIndex;
 	/**
 	 * Inicializa los datos con 3 columnas de los métodos de la clase TrastoVO
 	 * @throws SQLException 
@@ -54,8 +56,8 @@ public class MisTrastosController {
 	    showTrastosDetails(null);
 
 	    // Listen for selection changes and show the person details when changed.
-	    trastosTable.getSelectionModel().selectedItemProperty().addListener(
-	            (observable, oldValue, newValue) -> showTrastosDetails(newValue));
+	    //trastosTable.getSelectionModel().selectedItemProperty().addListener(
+	            //(observable, oldValue, newValue) -> showTrastosDetails(newValue));
 	    
 	   
     }
@@ -95,12 +97,13 @@ public class MisTrastosController {
     private void handleDeletePerson() {
     	
     	TrastoVO trastoVO;
-    	int selectedIndex;
+    	
     	ArrayList<TrastoVO> llistaEmpleats;
     	
     	try {
 	        
     		selectedIndex = trastosTable.getSelectionModel().getSelectedIndex();
+    		
 	        
     		if (selectedIndex >= 0) {
     			
@@ -140,15 +143,77 @@ public class MisTrastosController {
         	alert.showAndWait();
     	}
     }
+    public int getSelectedIndex() {
+    	return this.selectedIndex;
+    }
     
+    /**
+     * Cuando el usuario hace click al boton añadir usuario, abre un diálogo para añadir los datos del nuevo trasto
+     * @throws SQLException 
+     * 
+     */
     @FXML
-    public void añadirTrasto() {
-    	 TrastoVO tempTrasto = new TrastoVO();
-         boolean okClicked = mainApp.showTrastoEditDialog(tempTrasto);
-         if (okClicked) {
-        	 System.out.println("Dentro de añadirTrasto");
-             mainApp.getTrastoData().add(tempTrasto);
-         }
+    private void handleNewTrasto() throws SQLException {
+    	System.out.println("HandleNewPerson");
+        TrastoVO tempTrasto = new TrastoVO();
+        this.mainApp.showTrastoEditDialog(tempTrasto);
+        boolean okClicked = mainApp.showTrastoEditDialog(tempTrasto);
+        if (okClicked) {
+            mainApp.getTrastoData().add(tempTrasto);
+        }
+    }
+    
+    /**
+     * Called when the user clicks the edit button. Opens a dialog to edit
+     * details for the selected person.
+     * @throws SQLException 
+     */
+    @FXML
+    private void handleEditTrasto() throws SQLException {
+    	
+    	TrastoVO trastoVO;
+    	int selectedIndex;
+    	ArrayList<TrastoVO> llistaEmpleats;
+    	
+    	try {
+	        
+    		selectedIndex = trastosTable.getSelectionModel().getSelectedIndex();
+	        
+    		if (selectedIndex >= 0) {
+    			trastoVO = trastosTable.getItems().get(selectedIndex);
+    			this.mainApp.showTrastoEditDialog(trastoVO);
+    		
+	        } else {
+	        	// Show the error message.
+	        	Alert alert = new Alert(AlertType.INFORMATION);
+	        	alert.setTitle("Information Dialog");
+	        	alert.setHeaderText("Atención");
+	        	alert.setContentText("Selecciona un trasto");
+
+	        	alert.showAndWait();
+	        }
+	        
+    	}catch(SQLException e) {
+    		System.err.println("handleDeletePerson :: " + e.getMessage());
+    		// Show the error message.
+        	Alert alert = new Alert(AlertType.INFORMATION);
+        	alert.setTitle("Information Dialog");
+        	alert.setHeaderText("Atención");
+        	alert.setContentText("Selecciona un trasto");
+
+        	alert.showAndWait();
+    	}
+    }
+    
+    private void reloadDB() throws SQLException {
+    	TrastoDAO currEmpDAO = new TrastoDAO();
+        ArrayList<TrastoVO> empleatsArrayList;
+    	empleatsArrayList = currEmpDAO.obtenirTotsTrastos();
+        trastosTable.getItems().clear();
+        
+        for(int i =0 ; i<empleatsArrayList.size(); i++) {
+        	trastosTable.getItems().add(empleatsArrayList.get(i));
+        }
     }
     
     private void showTrastosDetails(TrastoVO trasto) {

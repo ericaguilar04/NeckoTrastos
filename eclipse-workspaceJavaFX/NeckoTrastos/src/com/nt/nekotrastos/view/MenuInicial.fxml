@@ -11,15 +11,15 @@
       <AnchorPane layoutY="-12.0" prefHeight="504.0" prefWidth="641.0">
          <children>
             <TextField fx:id="barraBuscadorra" layoutX="167.0" layoutY="76.0" prefHeight="24.0" prefWidth="317.0" />
-            <AnchorPane layoutX="22.0" layoutY="116.0" prefHeight="200.0" prefWidth="602.0">
+            <AnchorPane layoutX="22.0" layoutY="116.0" prefHeight="200.0" prefWidth="487.0">
                <children>
-                  <TableView fx:id="trastosTable" layoutX="-1.0" prefHeight="200.0" prefWidth="602.0">
+                  <TableView fx:id="trastosTable" layoutX="-1.0" prefHeight="200.0" prefWidth="597.0">
                     <columns>
                       <TableColumn fx:id="nombreTrastoColumn" prefWidth="134.0" text="Nombre" />
-                      <TableColumn fx:id="descripcionColumn" prefWidth="178.0" text="Descripcion" />
-                        <TableColumn fx:id="precioColumn" prefWidth="87.0" text="Precio" />
-                        <TableColumn fx:id="id_propietarioColumn" prefWidth="90.0" text="Propietario" />
-                        <TableColumn prefWidth="112.0" text="Telefono" />
+                      <TableColumn fx:id="descripcionColumn" prefWidth="138.0" text="Descripcion" />
+                        <TableColumn fx:id="precioColumn" prefWidth="69.0" text="Precio" />
+                        <TableColumn fx:id="id_propietarioColumn" prefWidth="145.0" text="Propietario" />
+                        <TableColumn fx:id="telefonoColumn" prefWidth="110.0" text="Telefono" />
                     </columns>
                   </TableView>
                </children></AnchorPane>
