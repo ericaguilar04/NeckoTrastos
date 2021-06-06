@@ -245,7 +245,7 @@ public class TrastoDAO {
 				trastoVOAux.setDescripcion(rs.getString(3));
 				trastoVOAux.setPrecio(Float.parseFloat(rs.getString(4)));
 				trastoVOAux.setID_Propietario(rs.getString(5));
-				trastoVOAux.setID_Producto(Integer.parseInt(rs.getString(6)));
+				trastoVOAux.setTelefono(Integer.parseInt(rs.getString(6)));
 				
 				trastoList.add(trastoVOAux);
 			}

@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="NeckoTrastos.jar" size="49524" download="eager" />
+    <jar href="NeckoTrastos.jar" size="49520" download="eager" />
     <jar href="libs/controlsfx-8.0.6_20.jar" size="856539" download="eager" />
     <jar href="libs/mariadb-java-client-2.7.2.jar" size="632979" download="eager" />
   </resources>

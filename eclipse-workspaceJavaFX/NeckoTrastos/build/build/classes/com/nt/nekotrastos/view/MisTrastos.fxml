@@ -18,7 +18,7 @@
                   <Image url="@../Imagenes%20NK/Logo.png" />
                </image></ImageView>
             <Button layoutX="478.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleNewTrasto" prefHeight="24.0" prefWidth="137.0" text="Añadir Trasto" />
-            <Button layoutX="478.0" layoutY="151.0" mnemonicParsing="false" onAction="#handleDeletePerson" prefHeight="24.0" prefWidth="137.0" text="Borrar Trasto" />
+            <Button layoutX="478.0" layoutY="151.0" mnemonicParsing="false" onAction="#handleDeleteTrasto" prefHeight="24.0" prefWidth="137.0" text="Borrar Trasto" />
             <Button layoutX="478.0" layoutY="182.0" mnemonicParsing="false" onAction="#handleEditTrasto" prefHeight="24.0" prefWidth="137.0" text="Editar Trasto" />
             <AnchorPane layoutX="31.0" layoutY="37.0" prefHeight="252.0" prefWidth="440.0">
                <children>
