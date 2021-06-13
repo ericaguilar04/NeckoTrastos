@@ -29,7 +29,7 @@ public class TrastoEditDialogController {
 	@FXML
 	private TextField ID_Propietario;			// Text vinculat al FXML. Mostra el nom del seu propietari
 	
-	private TableView<TrastoVO> trastosTable;
+	
 	
 	/*** CONTROLADORES I INSTÁNCIIAS ***/
 	private Stage dialogStage;
@@ -96,8 +96,8 @@ public class TrastoEditDialogController {
     public void setMainApp(MainApp mainApp) throws SQLException {
         this.mainApp = mainApp;
         // Add observable list data to the table
-        this.mainApp.cargarTablaMisTrastos();
-        trastosTable.setItems(this.mainApp.getMisTrastosData());
+        //this.mainApp.cargarTablaMisTrastos();
+        
         
     }
     /**
@@ -152,10 +152,9 @@ public class TrastoEditDialogController {
     	        	llistaTrastos = trastoDAO.obtenerTrastosDeMisTrastos(mainApp.getUsuarioLogin().getId_Usuario());
     	        	
     	        	//esborrem totes els dades
-    	        	trastosTable.getItems().clear();
+    	        	
     	        	//carreguem  la llista de'mepleats actuatlizada
-    	        	for(int i=0; i< llistaTrastos.size();i++)
-    	        		trastosTable.getItems().add(llistaTrastos.get(i));
+    	        	
     	        	
     	        	TrastoVO newTrasto = new TrastoVO(trasto.getNombreTrasto(),trasto.getDescripcion(),trasto.getPrecio());
     	        	TrastoDAO newConnection = new TrastoDAO();

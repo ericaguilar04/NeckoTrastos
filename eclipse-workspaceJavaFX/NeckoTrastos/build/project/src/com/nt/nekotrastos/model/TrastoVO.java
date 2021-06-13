@@ -45,6 +45,26 @@ public class TrastoVO {
 			this.telefono = telefono;
 			
 		}
+		
+		/**
+		 * Constructor autocompleta id_producto
+		 * @param id_Producto
+		 * @param nombreTrasto
+		 * @param descripcion
+		 * @param precio
+		 * @param id_Propietario
+		 * @param telefono
+		 */
+		public TrastoVO(String nombreTrasto,String descripcion,float precio,String id_Propietario, int telefono) {
+		
+			
+			this.nombreTrasto = nombreTrasto;
+			this.descripcion = descripcion;
+			this.precio = precio;
+			this.id_Propietario = id_Propietario;
+			this.telefono = telefono;
+			
+		}
 		/*** GETTERS Y SETTERS ***/
 		public int getTelefono() {
 			return telefono;

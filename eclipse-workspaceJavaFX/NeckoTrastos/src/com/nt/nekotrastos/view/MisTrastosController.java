@@ -177,7 +177,7 @@ public class MisTrastosController {
     	ArrayList<TrastoVO> llistaEmpleats;
     	
     	try {
-	        
+    		
     		selectedIndex = trastosTable.getSelectionModel().getSelectedIndex();
 	        
     		if (selectedIndex >= 0) {

@@ -108,6 +108,7 @@ public class MisTrastosController {
     			//obtenim l'empleat a esborrar
 	        	trastoVO = trastosTable.getItems().get(selectedIndex);
 	        	//Borrem l'empleat a bbdd
+	        	System.out.println("Trasto a borrar:" + trastoVO.getTelefono());
 	        	trastoDAO.deleteTrasto(trastoVO.getID_Producto());
 	        	//obtenim totes els empleats
 	        	llistaEmpleats = trastoDAO.obtenerTrastosDeMisTrastos(this.mainApp.getUsuarioLogin().getId_Usuario());

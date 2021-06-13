@@ -157,7 +157,7 @@ public class TrastoEditDialogController {
     	        	for(int i=0; i< llistaTrastos.size();i++)
     	        		trastosTable.getItems().add(llistaTrastos.get(i));
     	        	
-    	        	TrastoVO newTrasto = new TrastoVO(trasto.getNombreTrasto(),trasto.getDescripcion(),trasto.getPrecio());
+    	        	TrastoVO newTrasto = new TrastoVO(trasto.getNombreTrasto(),trasto.getDescripcion(),trasto.getPrecio(), mainApp.getUsuarioLogin().getId_Usuario(), 5);
     	        	TrastoDAO newConnection = new TrastoDAO();
     	        	newConnection.insertTrasto(newTrasto);
     	           //empnoField.getText();

@@ -123,6 +123,7 @@ public class MainApp extends Application {
      * @throws SQLException
      */
     public void cargarTablaMisTrastos() throws SQLException {
+    	trastoDataUsuario.clear();
     	ArrayList<TrastoVO> llistaTrastosUsuario;
     	
     	llistaTrastosUsuario = trastoDAO.obtenerTrastosDeMisTrastos(this.getUsuarioLogin().getId_Usuario());
@@ -234,6 +235,7 @@ public class MainApp extends Application {
      */
     public void showMisTrastos() throws SQLException {
         try {
+        	
             // Carga el diseño de la vista de un archivo fxml (propiedades)
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/MisTrastos.fxml"));
@@ -275,7 +277,7 @@ public class MainApp extends Application {
 
             // Set the person into the controller.
             TrastoEditDialogController controller = loader.getController();
-            //controller.setMainApp(this);
+            controller.setMainApp(this);
             controller.setDialogStage(dialogStage);
             System.out.println("PROPIETARIO: "+trasto.getID_Propietario());
             System.out.println("Propietario: "+trasto);
@@ -335,13 +337,16 @@ public class MainApp extends Application {
     private void cargarTrastos() {
     	
     	ArrayList<TrastoVO> llistaTrastos;
-		
+    	
 		
 		try {
+			trastoData.clear();
+			trastoDataUsuario.clear();
 			trastoDAO = new TrastoDAO();
 			llistaTrastos = trastoDAO.obtenirTotsTrastos();	// lista para enviar al menú inicial
 			
-			
+			trastoData.clear();
+			trastoDataUsuario.clear();
 			for(int i=0; i< llistaTrastos.size();i++) {						// Guarda todos los trastos de la base de datos (menú inical)
 				trastoData.add(llistaTrastos.get(i));
 				System.out.println(llistaTrastos.get(i).getID_Producto());
